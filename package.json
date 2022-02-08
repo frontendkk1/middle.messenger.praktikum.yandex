@@ -13,7 +13,7 @@
   "scripts": {
     "clean": "rimraf ./dist",
     "dev": "parcel ./src/index.html -p 3000",
-    "build": "parcel build ./src/index.html",
+    "build": "npm install && parcel build ./src/index.html",
     "start": "node server.js"
   },
   "license": "MIT",
