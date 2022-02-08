@@ -1,15 +1,10 @@
 {
   "name": "middle.messenger.praktikum.yandex",
   "version": "1.0.0",
-  "source": [
-    "src/index.html",
-    "src/pages/login/index.html",
-    "src/pages/server-error/index.html"
-  ],
   "scripts": {
     "clean": "rimraf ./dist",
-    "dev": "parcel -p 3000",
-    "build": "parcel build"
+    "dev": "parcel ./src/**/*.html -p 3000",
+    "build": "parcel build ./src/**/*.html"
   },
   "license": "MIT",
   "devDependencies": {
