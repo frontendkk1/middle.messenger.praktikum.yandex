@@ -1,14 +1,6 @@
-form
-    p Вход
-    div
-        label
-            | Логин
-            input(name="login")
-    div
-        label
-            | Пароль
-            input(name="password")
-    div
-        button(type="submit") Войти
-    div
-        a(href="/pages/registration") Нет аккаунта?
+main.main
+    form.form.login-form(action="/pages/chats")
+        p.form__title Вход
+        each field in fields
+            div.form__field
+                != field

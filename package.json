@@ -1,29 +1,22 @@
 {
   "name": "middle.messenger.praktikum.yandex",
   "version": "1.0.0",
-  "description": "",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/frontendkk1/middle.messenger.praktikum.yandex.git"
-  },
-  "bugs": {
-    "url": "https://github.com/frontendkk1/middle.messenger.praktikum.yandex/issues"
-  },
-  "homepage": "https://github.com/frontendkk1/middle.messenger.praktikum.yandex#readme",
+  "author": "",
   "scripts": {
     "clean": "rimraf ./dist",
-    "dev": "parcel ./src/index.html -p 3000",
-    "build": "parcel build ./src/index.html",
-    "start": "node server.js"
+    "dev": "npm run clean && parcel ./src/**/index.pug -p 3000",
+    "build": "npm run clean && parcel build ./src/**/index.pug",
+    "start": "npm run build && node server.js"
   },
   "license": "MIT",
   "devDependencies": {
+    "@parcel/transformer-pug": "^2.2.1",
     "@parcel/transformer-sass": "^2.2.1",
     "parcel": "^2.2.1",
-    "parcel-transformer-pug-precompile": "^1.0.6"
+    "parcel-transformer-pug-precompile": "^1.0.6",
+    "pug": "^3.0.2"
   },
   "keywords": [],
-  "author": "",
   "dependencies": {
     "express": "^4.17.2"
   }
