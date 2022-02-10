@@ -10,8 +10,9 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@parcel/transformer-pug": "^2.2.1",
-    "@parcel/transformer-sass": "^2.2.1",
+    "@parcel/config-default": "^2.3.1",
+    "@parcel/transformer-pug": "^2.3.1",
+    "@parcel/transformer-sass": "^2.3.1",
     "parcel": "^2.2.1",
     "parcel-transformer-pug-precompile": "^1.0.6",
     "pug": "^3.0.2"
