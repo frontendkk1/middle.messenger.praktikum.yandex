@@ -5,8 +5,8 @@
   "scripts": {
     "clean": "rimraf ./dist",
     "dev": "npm run clean && parcel ./src/**/index.pug -p 3000",
-    "build": "npm run clean && parcel build ./src/**/index.pug",
-    "start": "parcel build ./src/**/index.pug && node server.js"
+    "build": "parcel build ./src/**/index.pug",
+    "start": "npm run build && node server.js"
   },
   "license": "MIT",
   "devDependencies": {
