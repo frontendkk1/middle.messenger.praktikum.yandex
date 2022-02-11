@@ -1,0 +1,24 @@
+{
+  "name": "middle.messenger.praktikum.yandex",
+  "version": "1.0.0",
+  "author": "",
+  "scripts": {
+    "clean": "rimraf ./dist",
+    "dev": "npm run clean && parcel ./src/**/index.pug -p 3000",
+    "build": "parcel build ./src/**/index.pug",
+    "start": "npm run build && node server.js"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@parcel/config-default": "^2.3.1",
+    "@parcel/transformer-pug": "^2.3.1",
+    "@parcel/transformer-sass": "^2.3.1",
+    "parcel": "^2.2.1",
+    "parcel-transformer-pug-precompile": "^1.0.6",
+    "pug": "^3.0.2"
+  },
+  "keywords": [],
+  "dependencies": {
+    "express": "^4.17.2"
+  }
+}

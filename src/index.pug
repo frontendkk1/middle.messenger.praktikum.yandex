@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+   html(lang="ru")
+      head
+        include ./layout/head.pug
+        title Messenger
+        link(rel="stylesheet" href="./index.scss")
+      body
+        div(id="app")
+            main.main
+                div
+                    p: b Страницы:
+                    p(style="margin: 16px 0;"): a(href="/pages/login") Авторизация
+                    p(style="margin: 16px 0;"): a(href="/pages/registration") Регистрация
+                    p(style="margin: 16px 0;"): a(href="/pages/user-settings") Настройки профиля
+                    p(style="margin: 16px 0;"): a(href="/pages/chats") Чаты
+                    p(style="margin: 16px 0;"): a(href="/pages/not-found") 404
+                    p(style="margin: 16px 0;"): a(href="/pages/server-error") 5**

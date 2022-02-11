@@ -1,0 +1,8 @@
+.profile
+    a(href="/pages/chats").left-navigation-button
+    div.main
+        form.form(action="/pages/chats")
+            p.form__title Настройки пользователя
+            each field in fields
+                div.form__field
+                    != field
