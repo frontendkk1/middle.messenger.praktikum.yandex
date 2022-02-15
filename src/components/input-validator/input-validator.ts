@@ -1,6 +1,6 @@
 import { Block } from '../../utils/block';
 import { validate, VALIDATION_NAMES } from '../../utils/validator';
-import { Input, IInputProps } from '../input/Input';
+import { Input, IInputProps } from '../input/input';
 import inputValidatorTemplate from './input-validator.tmpl.pug';
 
 interface IValidatedInputProps extends IInputProps {
