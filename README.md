@@ -17,6 +17,8 @@
 - `npm run dev` — запуск проекта локально,
 - `npm run build` — сборка проекта,
 - `npm run start` — сборка проекта и запуск express-сервера на 3000 порту.
+- `npm run stylelint` — запуск stylelint
+- `npm run eslint` — запуск eslint
 
 
 ## Краткое описание страниц
@@ -25,10 +27,11 @@
 - На странице с чатами справа сверху есть кнопка Профиль, которая направляет на страницу редактирования профиля
 
 ## Краткое описание архитектуры
+- Класс для работы с запросами, Block, event bus находятся в папке `./src/utils/`
 - Общие модули находятся в папке `./src/components/` и представляют из себя `pug` и стили на `scss`
 - Страницы лежат в папке `./src/pages/`
 - Файлы с расширением `*.tmpl.pug` компилируются с помощью плагина `parcel-transformer-pug-precompile`
 - Файлы с расширением `*.pug` компилируются с помощью плагина `@parcel/transformer-pug`. В них хранится layout страницы.
 - Логика с компиляцией шаблонов лежит в файлах `./src/pages/**/*.js`
 
-[Pull request, sprint 1](https://github.com/frontendkk1/middle.messenger.praktikum.yandex/pull/1)
+[Pull request, sprint 2](https://github.com/frontendkk1/middle.messenger.praktikum.yandex/pull/2)
