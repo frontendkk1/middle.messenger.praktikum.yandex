@@ -1,4 +1,4 @@
-export enum METHOD_TYPES {
+export enum MethodTypes {
     GET = 'GET',
     PUT = 'PUT',
     POST = 'POST',
@@ -7,7 +7,7 @@ export enum METHOD_TYPES {
 
 interface IOptions {
     headers?: Record<string, string>,
-    method: METHOD_TYPES,
+    method: MethodTypes,
     data?: Document | XMLHttpRequestBodyInit;
     timeout?: number;
 }
@@ -18,20 +18,20 @@ function queryStringify(queryObj: Record<string, unknown>) {
 }
 
 export class HTTPTransport {
-    public get = (url: string, options: IOptions = { method: METHOD_TYPES.GET }) => {
-        this.request(url, { ...options, method: METHOD_TYPES.GET });
+    public get = (url: string, options: IOptions = { method: MethodTypes.GET }) => {
+        this.request(url, { ...options, method: MethodTypes.GET });
     };
 
-    public put = (url: string, options: IOptions = { method: METHOD_TYPES.GET }) => {
-        this.request(url, { ...options, method: METHOD_TYPES.PUT });
+    public put = (url: string, options: IOptions = { method: MethodTypes.GET }) => {
+        this.request(url, { ...options, method: MethodTypes.PUT });
     };
 
-    public post = (url: string, options: IOptions = { method: METHOD_TYPES.GET }) => {
-        this.request(url, { ...options, method: METHOD_TYPES.POST });
+    public post = (url: string, options: IOptions = { method: MethodTypes.GET }) => {
+        this.request(url, { ...options, method: MethodTypes.POST });
     };
 
-    public delete = (url: string, options: IOptions = { method: METHOD_TYPES.GET }) => {
-        this.request(url, { ...options, method: METHOD_TYPES.DELETE });
+    public delete = (url: string, options: IOptions = { method: MethodTypes.GET }) => {
+        this.request(url, { ...options, method: MethodTypes.DELETE });
     };
 
     public request = (url: string, options: IOptions, queryObj: Record<string, unknown> = {}) => {
@@ -43,7 +43,7 @@ export class HTTPTransport {
 
             let fullUrl = url;
 
-            if (method === METHOD_TYPES.GET && queryObj) {
+            if ([MethodTypes.GET, MethodTypes.POST].includes(method) && queryObj) {
                 fullUrl = `${url}${queryStringify(queryObj)}`;
             }
 
@@ -66,7 +66,7 @@ export class HTTPTransport {
 
             xhr.ontimeout = reject;
 
-            if (method === METHOD_TYPES.GET || !data) {
+            if (method === MethodTypes.GET || !data) {
                 xhr.send();
             } else {
                 xhr.send(data);
