@@ -126,17 +126,17 @@ export class Block<T extends object = {}> {
     }
 
     public compile(pugPrecompile: any, props?: Record<string, unknown>) {
-        const propsAndStubs = { ...props };
+        const propsAndChildren = { ...props };
 
         Object.entries(this.children).forEach(([key, child]) => {
-            propsAndStubs[key] = `<div data-id="${child.id}"></div>`;
+            propsAndChildren[key] = `<div data-id="${child.id}"></div>`;
         });
 
         const fragment = document.createElement('template');
 
-        console.log(propsAndStubs)
+        console.log(propsAndChildren)
 
-        fragment.innerHTML = pugPrecompile(propsAndStubs);
+        fragment.innerHTML = pugPrecompile(propsAndChildren);
 
         Object.values(this.children).forEach((child) => {
             const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
