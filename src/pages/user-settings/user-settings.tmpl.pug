@@ -1,8 +1,29 @@
 .profile
-    a(href="/pages/chats").left-navigation-button
+    a(href="/chats").left-navigation-button
     div.main
-        form.form(action="/pages/chats")
+        form.form(action="/chats")
             p.form__title Настройки пользователя
-            each field in fields
+            if emailField
                 div.form__field
-                    != field
+                    != emailField
+            if loginField
+                div.form__field
+                    != loginField
+            if firstNameField
+                div.form__field
+                    != firstNameField
+            if secondNameField
+                div.form__field
+                    != secondNameField
+            if phoneField
+                div.form__field
+                    != phoneField
+            if passwordField
+                div.form__field
+                    != passwordField
+            if submitButton
+                div.form__field
+                    != submitButton
+            if loginButton
+                div.form__field
+                    != loginButton

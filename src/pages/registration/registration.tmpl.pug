@@ -1,6 +1,26 @@
-main.main
-    form.form.registration-form(action="/pages/chats")
-        p.form__title Регистрация
-        each field in fields
-            div.form__field
-                != field
+form.form.registration-form(action="/chats")
+    p.form__title Регистрация
+    if emailField
+        div.form__field
+            != emailField
+    if loginField
+        div.form__field
+            != loginField
+    if firstNameField
+        div.form__field
+            != firstNameField
+    if secondNameField
+        div.form__field
+            != secondNameField
+    if phoneField
+        div.form__field
+            != phoneField
+    if passwordField
+        div.form__field
+            != passwordField
+    if submitButton
+        div.form__field
+            != submitButton
+    if loginButton
+        div.form__field
+            != loginButton
