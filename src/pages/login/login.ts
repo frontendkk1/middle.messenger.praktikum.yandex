@@ -1,15 +1,16 @@
-import { Block } from '../../utils/block';
+import { Block } from '~src/utils/block';
+import { LoginController } from './login.controller';
 import '../index.scss';
 import './login.scss';
-import '../../components/form/form.scss';
-import '../../components/input/input.scss';
-import '../../components/input-validator/input-validator.scss';
-import '../../components/button/button.scss';
-import { Input } from '../../components/input/Input';
+import '~src/components/form/form.scss';
+import '~src/components/input/input.scss';
+import '~src/components/input-validator/input-validator.scss';
+import '~src/components/button/button.scss';
+import { Input } from '~src/components/input/Input';
 import loginTemplate from './login.tmpl.pug';
-import ValidatedInput from '../../components/input-validator/input-validator';
-import { Button } from '../../components/button/button';
-import { VALIDATION_NAMES } from '../../utils/validator';
+import ValidatedInput from '~src/components/input-validator/input-validator';
+import { Button } from '~src/components/button/button';
+import { VALIDATION_NAMES } from '~src/utils/validator';
 
 interface ILoginProps {
     loginField: Input;
@@ -17,8 +18,12 @@ interface ILoginProps {
 }
 
 export class Login extends Block<ILoginProps> {
+    loginController;
+
     constructor() {
         super('main');
+
+        this.loginController = new LoginController();
     }
 
     protected getChildren(): Record<string, Block> {
@@ -49,10 +54,9 @@ export class Login extends Block<ILoginProps> {
                     loginField.validate();
                     passwordField.validate();
 
-                    // eslint-disable-next-line no-console
-                    console.log('LOGIN_FORM DATA', {
-                        login: loginField.value,
-                        password: passwordField.value,
+                  this.loginController.login({
+                      login: loginField.value,
+                      password: passwordField.value,
                     });
                 },
             },

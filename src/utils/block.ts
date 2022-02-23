@@ -1,5 +1,4 @@
 import { v4 as makeUUID } from 'uuid';
-import * as pug from 'pug';
 import { EventBus } from './event-bus';
 
 export class Block<T extends object = {}> {
@@ -8,6 +7,7 @@ export class Block<T extends object = {}> {
         FLOW_CDM: 'flow:component-did-mount',
         FLOW_CDU: 'flow:component-did-update',
         FLOW_RENDER: 'flow:render',
+        FLOW_CWU: 'flow:component-will-unmount',
     };
 
     private _element: HTMLElement | null = null;
@@ -88,6 +88,7 @@ export class Block<T extends object = {}> {
         eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
         eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
         eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
+        eventBus.on(Block.EVENTS.FLOW_CWU, this._componentWillUnmount.bind(this));
     }
 
     private _componentDidMount() {
@@ -103,6 +104,21 @@ export class Block<T extends object = {}> {
     public dispatchComponentDidMount() {
         this.eventBus.emit(Block.EVENTS.FLOW_CDM);
         this._render();
+    }
+
+    private _componentWillUnmount() {
+        this.componentWillUnmount();
+
+        Object.values(this.children).forEach((child) => {
+            child.dispatchComponentWillUnmount();
+        });
+    }
+
+    public componentWillUnmount() {}
+
+    public dispatchComponentWillUnmount() {
+        this.eventBus.emit(Block.EVENTS.FLOW_CWU);
+        this._unmount();
     }
 
     private _componentDidUpdate(prevProps: T, newProps: T) {
@@ -150,6 +166,7 @@ export class Block<T extends object = {}> {
     }
 
     public setProps(nextProps: Partial<T>) {
+        console.log('Block: setProps:', nextProps)
         if (!nextProps) {
             return;
         }
@@ -173,6 +190,14 @@ export class Block<T extends object = {}> {
         this._addEvents();
     }
 
+    private _unmount() {
+        this._removeEvents();
+
+        if (this._element) {
+            this._element.remove();
+        }
+    }
+
     public abstract render(): DocumentFragment;
 
     private _makeProxyObj<S extends object>(props: S) {
@@ -182,7 +207,6 @@ export class Block<T extends object = {}> {
                     return true;
                 }
 
-                // eslint-disable-next-line no-param-reassign
                 target[prop as keyof S] = value;
                 this.eventBus.emit(Block.EVENTS.FLOW_CDU);
                 return true;
