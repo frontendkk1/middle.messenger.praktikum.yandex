@@ -1,11 +1,11 @@
-import { Block } from '../../utils/block';
-import { validate, VALIDATION_NAMES } from '../../utils/validator';
+import { Block } from '~src/utils/block';
+import { validate, ValidationNames } from '~src/utils/validator';
 import { Input, IInputProps } from '../input/input';
 import inputValidatorTemplate from './input-validator.tmpl.pug';
 
 interface IValidatedInputProps extends IInputProps {
     isValid: boolean;
-    validationName: VALIDATION_NAMES;
+    validationName: ValidationNames;
     validationMessage?: string;
     withoutValidationMessage?: boolean;
 }
@@ -29,9 +29,9 @@ export default class ValidatedInput extends Block<IValidatedInputProps> {
     }
 
     protected getAttributes(): Record<string, string> {
-        return ({
+        return {
             class: 'input-field validated-input',
-        });
+        };
     }
 
     public get value(): string {
@@ -40,12 +40,14 @@ export default class ValidatedInput extends Block<IValidatedInputProps> {
 
     public validate(referenceValue?: string) {
         const { validationName, withoutValidationMessage } = this.props;
-        const {
-            isValid,
-            message,
-        } = validate(validationName, this.children.loginField.value, referenceValue);
+        const { isValid, message } = validate(
+            validationName,
+            this.children.loginField.value,
+            referenceValue
+        );
         this.setProps({
-            validationMessage: isValid || withoutValidationMessage ? '' : message,
+            validationMessage:
+                isValid || withoutValidationMessage ? '' : message,
         });
     }
 

@@ -88,7 +88,10 @@ export class Block<T extends object = {}> {
         eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
         eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
         eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
-        eventBus.on(Block.EVENTS.FLOW_CWU, this._componentWillUnmount.bind(this));
+        eventBus.on(
+            Block.EVENTS.FLOW_CWU,
+            this._componentWillUnmount.bind(this)
+        );
     }
 
     private _componentDidMount() {
@@ -142,6 +145,7 @@ export class Block<T extends object = {}> {
     }
 
     public compile(pugPrecompile: any, props?: Record<string, unknown>) {
+        console.log('Block: props:', props);
         const propsAndChildren = { ...props };
 
         Object.entries(this.children).forEach(([key, child]) => {
@@ -150,12 +154,12 @@ export class Block<T extends object = {}> {
 
         const fragment = document.createElement('template');
 
-        console.log(propsAndChildren)
-
         fragment.innerHTML = pugPrecompile(propsAndChildren);
 
         Object.values(this.children).forEach((child) => {
-            const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
+            const stub = fragment.content.querySelector(
+                `[data-id="${child.id}"]`
+            );
             const childContent = child.getContent();
             if (childContent) {
                 stub?.replaceWith(childContent);
@@ -166,7 +170,7 @@ export class Block<T extends object = {}> {
     }
 
     public setProps(nextProps: Partial<T>) {
-        console.log('Block: setProps:', nextProps)
+        console.log('Block: setProps:', nextProps);
         if (!nextProps) {
             return;
         }
@@ -230,7 +234,10 @@ export class Block<T extends object = {}> {
 
     private _removeEvents() {
         Object.keys(this._events).forEach((eventName) => {
-            this._element?.removeEventListener(eventName, this._events[eventName]);
+            this._element?.removeEventListener(
+                eventName,
+                this._events[eventName]
+            );
         });
     }
 }

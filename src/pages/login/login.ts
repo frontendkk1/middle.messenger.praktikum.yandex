@@ -10,7 +10,7 @@ import { Input } from '~src/components/input/Input';
 import loginTemplate from './login.tmpl.pug';
 import ValidatedInput from '~src/components/input-validator/input-validator';
 import { Button } from '~src/components/button/button';
-import { VALIDATION_NAMES } from '~src/utils/validator';
+import { ValidationNames } from '~src/utils/validator';
 
 interface ILoginProps {
     loginField: Input;
@@ -29,7 +29,7 @@ export class Login extends Block<ILoginProps> {
     protected getChildren(): Record<string, Block> {
         const loginField = new ValidatedInput({
             isValid: false,
-            validationName: VALIDATION_NAMES.LOGIN,
+            validationName: ValidationNames.LOGIN,
             placeholder: 'Логин',
             name: 'login',
             type: 'text',
@@ -38,7 +38,7 @@ export class Login extends Block<ILoginProps> {
 
         const passwordField = new ValidatedInput({
             isValid: false,
-            validationName: VALIDATION_NAMES.PASSWORD,
+            validationName: ValidationNames.PASSWORD,
             placeholder: 'Пароль',
             name: 'password',
             type: 'password',
@@ -54,9 +54,9 @@ export class Login extends Block<ILoginProps> {
                     loginField.validate();
                     passwordField.validate();
 
-                  this.loginController.login({
-                      login: loginField.value,
-                      password: passwordField.value,
+                    this.loginController.login({
+                        login: loginField.value,
+                        password: passwordField.value,
                     });
                 },
             },

@@ -1,3 +1,3 @@
 export type Indexed<T = any> = {
-  [key in string]: T;
+    [key in string]: T;
 };

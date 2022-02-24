@@ -9,7 +9,7 @@ import { Input } from '../../components/input/Input';
 import registrationTemplate from './registration.tmpl.pug';
 import ValidatedInput from '../../components/input-validator/input-validator';
 import { Button } from '../../components/button/button';
-import { VALIDATION_NAMES } from '../../utils/validator';
+import { ValidationNames } from '../../utils/validator';
 
 interface ILoginProps {
     loginField: Input;
@@ -24,7 +24,7 @@ export class Registration extends Block<ILoginProps> {
     protected getChildren(): Record<string, Block> {
         const emailField = new ValidatedInput({
             isValid: false,
-            validationName: VALIDATION_NAMES.EMAIL,
+            validationName: ValidationNames.EMAIL,
             placeholder: 'Почта',
             name: 'email',
             type: 'email',
@@ -33,17 +33,16 @@ export class Registration extends Block<ILoginProps> {
 
         const loginField = new ValidatedInput({
             isValid: false,
-            validationName: VALIDATION_NAMES.LOGIN,
+            validationName: ValidationNames.LOGIN,
             placeholder: 'Логин',
             name: 'login',
             type: 'text',
             classNames: 'input-field__input',
         });
 
-
         const firstNameField = new ValidatedInput({
             isValid: false,
-            validationName: VALIDATION_NAMES.NAME,
+            validationName: ValidationNames.NAME,
             placeholder: 'Имя',
             name: 'first_name',
             type: 'text',
@@ -52,7 +51,7 @@ export class Registration extends Block<ILoginProps> {
 
         const secondNameField = new ValidatedInput({
             isValid: false,
-            validationName: VALIDATION_NAMES.NAME,
+            validationName: ValidationNames.NAME,
             placeholder: 'Фамилия',
             name: 'second_name',
             type: 'text',
@@ -61,7 +60,7 @@ export class Registration extends Block<ILoginProps> {
 
         const phoneField = new ValidatedInput({
             isValid: false,
-            validationName: VALIDATION_NAMES.PHONE,
+            validationName: ValidationNames.PHONE,
             placeholder: 'Телефон',
             name: 'phone',
             type: 'tel',
@@ -70,7 +69,7 @@ export class Registration extends Block<ILoginProps> {
 
         const passwordField = new ValidatedInput({
             isValid: false,
-            validationName: VALIDATION_NAMES.PASSWORD,
+            validationName: ValidationNames.PASSWORD,
             placeholder: 'Пароль',
             name: 'password',
             type: 'password',

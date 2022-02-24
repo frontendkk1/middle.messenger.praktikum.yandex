@@ -51,7 +51,9 @@ export class Router {
     }
 
     use(pathname, block) {
-        const route = new Route(pathname, block, {rootQuery: this._rootQuery});
+        const route = new Route(pathname, block, {
+            rootQuery: this._rootQuery,
+        });
 
         this.routes.push(route);
 
@@ -59,21 +61,21 @@ export class Router {
     }
 
     start() {
-        window.onpopstate = (event => {
+        window.onpopstate = (event) => {
             this._onRoute(event.currentTarget.location.pathname);
-        }).bind(this);
+        };
         this._onRoute(window.location.pathname);
     }
 
     _onRoute(pathname) {
-        console.log('Router: _onRoute:', pathname)
+        console.log('Router: _onRoute:', pathname);
         let route = this.getRoute(pathname);
         if (!route) {
             route = this.getRoute('*');
         }
 
         if (this._currentRoute && this._currentRoute !== route) {
-           this._currentRoute.leave();
+            this._currentRoute.leave();
         }
 
         this._currentRoute = route;
@@ -81,7 +83,7 @@ export class Router {
     }
 
     go(pathname) {
-        console.log('Router: go:', pathname)
+        console.log('Router: go:', pathname);
         this.history.pushState({}, '', pathname);
         this._onRoute(pathname);
     }
@@ -95,6 +97,6 @@ export class Router {
     }
 
     getRoute(pathname) {
-        return this.routes.find(route => route.match(pathname));
+        return this.routes.find((route) => route.match(pathname));
     }
 }

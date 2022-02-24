@@ -35,6 +35,11 @@ export class Chats extends Block {
     }
 
     public render(): DocumentFragment {
-        return this.compile(chatsTemplate, { hamburgerImage, sendImage, fileImage, arrowImage });
+        return this.compile(chatsTemplate, {
+            hamburgerImage,
+            sendImage,
+            fileImage,
+            arrowImage,
+        });
     }
 }

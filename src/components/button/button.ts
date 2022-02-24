@@ -16,7 +16,7 @@ export class Button extends Block<ISubmitButtonProps> {
     protected getAttributes(): Record<string, string> {
         return {
             class: `button ${this.props.className || ''}`,
-            href: this.props.href || ''
+            href: this.props.href || '',
         };
     }
 

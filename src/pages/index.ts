@@ -9,11 +9,11 @@ import { Chats } from './chats/chats';
 const router = new Router('#app');
 
 router
-  .use('/', Login)
-  .use('/login', Login)
-  .use('/registration', Registration)
-  .use('/chats', Chats)
-  .use('/user-settings', UserSettings)
-  .use('/server-error', ServerError)
-  .use('*', NotFound)
-  .start();
+    .use('/', Login)
+    .use('/login', Login)
+    .use('/registration', Registration)
+    .use('/chats', Chats)
+    .use('/user-settings', UserSettings)
+    .use('/server-error', ServerError)
+    .use('*', NotFound)
+    .start();

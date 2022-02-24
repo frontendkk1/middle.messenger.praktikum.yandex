@@ -6,8 +6,8 @@ export enum MethodTypes {
 }
 
 interface IOptions {
-    headers?: Record<string, string>,
-    method: MethodTypes,
+    headers?: Record<string, string>;
+    method: MethodTypes;
     data?: Document | XMLHttpRequestBodyInit;
     timeout?: number;
 }
@@ -16,7 +16,13 @@ type TOptionsWithoutMethod = Omit<IOptions, 'method'>;
 
 function queryStringify(queryObj: Record<string, unknown>) {
     const keys = Object.keys(queryObj);
-    return keys.reduce((result, key, index) => `${result}${key}=${queryObj[key]}${index < keys.length - 1 ? '&' : ''}`, '?');
+    return keys.reduce(
+        (result, key, index) =>
+            `${result}${key}=${queryObj[key]}${
+                index < keys.length - 1 ? '&' : ''
+            }`,
+        '?'
+    );
 }
 
 export class HTTPTransport {
@@ -26,30 +32,62 @@ export class HTTPTransport {
         this.host = host;
     }
 
-    public get = (url: string, options: TOptionsWithoutMethod): Promise<XMLHttpRequest> => {
-        return this.request(url, { ...options, method: MethodTypes.GET }, options.timeout);
+    public get = (
+        url: string,
+        options: TOptionsWithoutMethod
+    ): Promise<XMLHttpRequest> => {
+        return this.request(
+            url,
+            { ...options, method: MethodTypes.GET },
+            options.timeout
+        );
     };
 
-    public put = (url: string, options: TOptionsWithoutMethod): Promise<XMLHttpRequest> => {
-        return this.request(url, { ...options, method: MethodTypes.PUT }, options.timeout);
+    public put = (
+        url: string,
+        options: TOptionsWithoutMethod
+    ): Promise<XMLHttpRequest> => {
+        return this.request(
+            url,
+            { ...options, method: MethodTypes.PUT },
+            options.timeout
+        );
     };
 
-    public post = (url: string, options: TOptionsWithoutMethod): Promise<XMLHttpRequest> => {
-        return this.request(url, { ...options, method: MethodTypes.POST }, options.timeout);
+    public post = (
+        url: string,
+        options: TOptionsWithoutMethod
+    ): Promise<XMLHttpRequest> => {
+        return this.request(
+            url,
+            { ...options, method: MethodTypes.POST },
+            options.timeout
+        );
     };
 
-    public delete = (url: string, options: TOptionsWithoutMethod): Promise<XMLHttpRequest> => {
-        return this.request(url, { ...options, method: MethodTypes.DELETE }, options.timeout);
+    public delete = (
+        url: string,
+        options: TOptionsWithoutMethod
+    ): Promise<XMLHttpRequest> => {
+        return this.request(
+            url,
+            { ...options, method: MethodTypes.DELETE },
+            options.timeout
+        );
     };
 
-    request = (url: string, options: IOptions = { method: MethodTypes.GET }, timeout = 5000): Promise<XMLHttpRequest> => {
-        const {headers = {}, method, data} = options;
-        console.log('HTTPTransport: request:', options)
+    request = (
+        url: string,
+        options: IOptions = { method: MethodTypes.GET },
+        timeout = 5000
+    ): Promise<XMLHttpRequest> => {
+        const { headers = {}, method, data } = options;
+        console.log('HTTPTransport: request:', options);
 
         return new Promise((resolve, reject) => {
             if (!method) {
-              reject('No method');
-              return;
+                reject('No method');
+                return;
             }
 
             const xhr = new XMLHttpRequest();
@@ -57,18 +95,16 @@ export class HTTPTransport {
             const fullUrl = `${this.host}${url}`;
 
             xhr.open(
-              method,
-              isGet && !!data
-                ? `${fullUrl}${queryStringify(data)}`
-                : fullUrl,
+                method,
+                isGet && !!data ? `${fullUrl}${queryStringify(data)}` : fullUrl
             );
 
-            Object.keys(headers).forEach(key => {
-              xhr.setRequestHeader(key, headers[key]);
+            Object.keys(headers).forEach((key) => {
+                xhr.setRequestHeader(key, headers[key]);
             });
 
-            xhr.onload = function() {
-              resolve(xhr);
+            xhr.onload = function () {
+                resolve(xhr);
             };
 
             xhr.onabort = reject;
@@ -78,9 +114,9 @@ export class HTTPTransport {
             xhr.ontimeout = reject;
 
             if (isGet || !data) {
-              xhr.send();
+                xhr.send();
             } else {
-              xhr.send(JSON.stringify(data));
+                xhr.send(JSON.stringify(data));
             }
         });
     };
