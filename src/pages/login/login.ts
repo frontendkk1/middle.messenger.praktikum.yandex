@@ -11,19 +11,25 @@ import loginTemplate from './login.tmpl.pug';
 import ValidatedInput from '~src/components/input-validator/input-validator';
 import { Button } from '~src/components/button/button';
 import { ValidationNames } from '~src/utils/validator';
+import { Router } from '~src/utils/router';
+import { connect } from '~src/utils/connect';
 
 interface ILoginProps {
     loginField: Input;
     passwordField: Input;
 }
 
+const withLoginApi = connect(state => ({ signinReq: { ...state.signinReq } }));
+
 export class Login extends Block<ILoginProps> {
     loginController;
+    router;
 
     constructor() {
         super('main');
 
         this.loginController = new LoginController();
+        this.router = new Router('');
     }
 
     protected getChildren(): Record<string, Block> {
@@ -66,6 +72,13 @@ export class Login extends Block<ILoginProps> {
             text: 'Зарегистрироваться',
             className: 'white',
             href: '/registration',
+            events: {
+                click: event => {
+                    event.preventDefault();
+
+                    this.router.go('/registration');
+                }
+            },
         });
 
         return {
@@ -83,6 +96,8 @@ export class Login extends Block<ILoginProps> {
     }
 
     public render(): DocumentFragment {
-        return this.compile(loginTemplate);
+        return this.compile(loginTemplate, this.props);
     }
 }
+
+export default withLoginApi(Login);

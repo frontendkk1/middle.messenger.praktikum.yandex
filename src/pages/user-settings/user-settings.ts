@@ -1,19 +1,29 @@
-import { Block } from '../../utils/block';
+import { Block } from '~src/utils/block';
 import '../index.scss';
 import './user-settings.scss';
 import '../../components/form/form.scss';
 import '../../components/input/input.scss';
 import '../../components/input-validator/input-validator.scss';
 import '../../components/button/button.scss';
-import { Input } from '../../components/input/Input';
 import registrationTemplate from './user-settings.tmpl.pug';
 import ValidatedInput from '../../components/input-validator/input-validator';
-import { Button } from '../../components/button/button';
-import { ValidationNames } from '../../utils/validator';
+import { Button } from '~src/components/button/button';
+import { ValidationNames } from '~src/utils/validator';
+import { UserSettingsController } from './user-settings.controller';
+import { UserController } from '../user/user.controller';
+import { connect } from '~src/utils/connect';
+
+const withUser = connect(state => ({ user: state.user }));
 
 export class UserSettings extends Block {
+    userSettingsController;
+    userController;
+
     constructor() {
         super('main');
+
+        this.userSettingsController = new UserSettingsController();
+        this.userController = new UserController();
     }
 
     protected getChildren(): Record<string, Block> {
@@ -53,6 +63,15 @@ export class UserSettings extends Block {
             classNames: 'input-field__input',
         });
 
+        const displayNameField = new ValidatedInput({
+            isValid: false,
+            validationName: ValidationNames.NAME,
+            placeholder: 'Имя в чате',
+            name: 'display_name',
+            type: 'text',
+            classNames: 'input-field__input',
+        });
+
         const phoneField = new ValidatedInput({
             isValid: false,
             validationName: ValidationNames.PHONE,
@@ -62,32 +81,31 @@ export class UserSettings extends Block {
             classNames: 'input-field__input',
         });
 
-        const oldPasswordField = new ValidatedInput({
-            isValid: false,
-            validationName: ValidationNames.PASSWORD,
-            placeholder: 'Пароль',
-            name: 'oldPassword',
-            type: 'password',
-            classNames: 'input-field__input',
-        });
-
-        const newPasswordField = new ValidatedInput({
-            isValid: false,
-            validationName: ValidationNames.PASSWORD,
-            placeholder: 'Пароль',
-            name: 'newPassword',
-            type: 'password',
-            classNames: 'input-field__input',
-        });
+        // const oldPasswordField = new ValidatedInput({
+        //     isValid: false,
+        //     validationName: ValidationNames.PASSWORD,
+        //     placeholder: 'Пароль',
+        //     name: 'oldPassword',
+        //     type: 'password',
+        //     classNames: 'input-field__input',
+        // });
+        //
+        // const newPasswordField = new ValidatedInput({
+        //     isValid: false,
+        //     validationName: ValidationNames.PASSWORD,
+        //     placeholder: 'Пароль',
+        //     name: 'newPassword',
+        //     type: 'password',
+        //     classNames: 'input-field__input',
+        // });
 
         const validatedInputList: ValidatedInput[] = [
             emailField,
             loginField,
             firstNameField,
             secondNameField,
+            displayNameField,
             phoneField,
-            oldPasswordField,
-            newPasswordField,
         ];
 
         const submitButton = new Button({
@@ -100,12 +118,12 @@ export class UserSettings extends Block {
                         input.validate();
                     });
 
-                    // eslint-disable-next-line no-console
-                    console.log('PROFILE_FORM DATA', {
-                        email: emailField.value,
+                    this.userSettingsController.changeProfile({
+                        first_name: firstNameField.value,
+                        second_name: secondNameField.value,
+                        display_name: displayNameField.value,
                         login: loginField.value,
-                        firstName: firstNameField.value,
-                        secondName: secondNameField.value,
+                        email: emailField.value,
                         phone: phoneField.value,
                     });
                 },
@@ -117,6 +135,7 @@ export class UserSettings extends Block {
             loginField,
             firstNameField,
             secondNameField,
+            displayNameField,
             phoneField,
             submitButton,
         };
@@ -128,7 +147,13 @@ export class UserSettings extends Block {
         };
     }
 
+    componentDidMount() {
+        this.userController.getUser();
+    }
+
     public render(): DocumentFragment {
         return this.compile(registrationTemplate);
     }
 }
+
+export default withUser(UserSettings);

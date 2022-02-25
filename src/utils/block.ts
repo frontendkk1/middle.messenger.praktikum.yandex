@@ -145,7 +145,7 @@ export class Block<T extends object = {}> {
     }
 
     public compile(pugPrecompile: any, props?: Record<string, unknown>) {
-        console.log('Block: props:', props);
+        console.log('Block: compile: props:', props);
         const propsAndChildren = { ...props };
 
         Object.entries(this.children).forEach(([key, child]) => {

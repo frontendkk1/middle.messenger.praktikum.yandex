@@ -1,8 +1,23 @@
 import store, { StoreEvents } from './store';
 import { Block } from './block';
-import { Indexed } from './types';
+import { TRequestApi } from './types';
 
-export const connect = (mapStateToProps: (state: Indexed) => Indexed) => {
+interface IStore {
+    signupReq: TRequestApi;
+    signinReq: TRequestApi;
+    user: {
+        id: number;
+        first_name: string;
+        second_name: string;
+        display_name: string;
+        login: string;
+        email: string;
+        phone: string;
+        avatar: string;
+    };
+}
+
+export const connect = (mapStateToProps: (state: IStore) => IStore) => {
     return function (Component: typeof Block) {
         return class extends Component {
             constructor(props) {

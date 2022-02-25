@@ -39,7 +39,7 @@ export class HTTPTransport {
         return this.request(
             url,
             { ...options, method: MethodTypes.GET },
-            options.timeout
+            options?.timeout
         );
     };
 
@@ -50,7 +50,7 @@ export class HTTPTransport {
         return this.request(
             url,
             { ...options, method: MethodTypes.PUT },
-            options.timeout
+            options?.timeout
         );
     };
 
@@ -61,7 +61,7 @@ export class HTTPTransport {
         return this.request(
             url,
             { ...options, method: MethodTypes.POST },
-            options.timeout
+            options?.timeout
         );
     };
 
@@ -72,7 +72,7 @@ export class HTTPTransport {
         return this.request(
             url,
             { ...options, method: MethodTypes.DELETE },
-            options.timeout
+            options?.timeout
         );
     };
 
@@ -102,6 +102,10 @@ export class HTTPTransport {
             Object.keys(headers).forEach((key) => {
                 xhr.setRequestHeader(key, headers[key]);
             });
+
+            xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+            xhr.withCredentials = true;
+            xhr.responseType = 'json';
 
             xhr.onload = function () {
                 resolve(xhr);

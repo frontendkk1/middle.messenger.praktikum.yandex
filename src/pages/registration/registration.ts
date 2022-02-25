@@ -1,24 +1,32 @@
-import { Block } from '../../utils/block';
+import { Block } from '~src/utils/block';
+import { connect } from '~src/utils/connect';
 import '../index.scss';
 import './registration.scss';
 import '../../components/form/form.scss';
 import '../../components/input/input.scss';
 import '../../components/input-validator/input-validator.scss';
 import '../../components/button/button.scss';
-import { Input } from '../../components/input/Input';
+import { Input } from '~src/components/input/Input';
 import registrationTemplate from './registration.tmpl.pug';
 import ValidatedInput from '../../components/input-validator/input-validator';
-import { Button } from '../../components/button/button';
-import { ValidationNames } from '../../utils/validator';
+import { Button } from '~src/components/button/button';
+import { ValidationNames } from '~src/utils/validator';
+import { RegistrationController } from './registration.controller';
 
 interface ILoginProps {
     loginField: Input;
     passwordField: Input;
 }
 
+const withRegistrationApi = connect(state => ({ signupReq: { ...state.signupReq } }));
+
 export class Registration extends Block<ILoginProps> {
+    registrationController;
+
     constructor() {
         super('main');
+
+        this.registrationController = new RegistrationController();
     }
 
     protected getChildren(): Record<string, Block> {
@@ -95,15 +103,14 @@ export class Registration extends Block<ILoginProps> {
                         child.validate();
                     });
 
-                    // eslint-disable-next-line no-console
-                    console.log('REGISTRATION_FORM DATA', {
+                    this.registrationController.signup({
                         email: emailField.value,
                         login: loginField.value,
-                        firstName: firstNameField.value,
-                        secondName: secondNameField.value,
+                        first_name: firstNameField.value,
+                        second_name: secondNameField.value,
                         phone: phoneField.value,
                         password: passwordField.value,
-                    });
+                    })
                 },
             },
         });
@@ -133,6 +140,8 @@ export class Registration extends Block<ILoginProps> {
     }
 
     public render(): DocumentFragment {
-        return this.compile(registrationTemplate);
+        return this.compile(registrationTemplate, this.props);
     }
 }
+
+export default withRegistrationApi(Registration);
