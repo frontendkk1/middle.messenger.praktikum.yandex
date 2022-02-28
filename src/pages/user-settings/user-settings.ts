@@ -12,11 +12,17 @@ import { ValidationNames } from '~src/utils/validator';
 import { UserSettingsController } from './user-settings.controller';
 import { UserController } from '../user/user.controller';
 import { connect } from '~src/utils/connect';
+import { LeftNavigationButton } from '~src/components/left-navigation-button/left-navigation-button';
+import '~src/components/left-navigation-button/left-navigation-button.scss';
 
-const withUser = connect(state => ({ user: state.user }));
+const withState = connect((state) => ({
+    user: state.user,
+    profileReq: state.profileReq,
+}));
 
 export class UserSettings extends Block {
     userSettingsController;
+
     userController;
 
     constructor() {
@@ -27,6 +33,8 @@ export class UserSettings extends Block {
     }
 
     protected getChildren(): Record<string, Block> {
+        const leftNavigationButton = new LeftNavigationButton();
+
         const emailField = new ValidatedInput({
             isValid: false,
             validationName: ValidationNames.EMAIL,
@@ -131,6 +139,7 @@ export class UserSettings extends Block {
         });
 
         return {
+            leftNavigationButton,
             emailField,
             loginField,
             firstNameField,
@@ -147,13 +156,20 @@ export class UserSettings extends Block {
         };
     }
 
-    componentDidMount() {
-        this.userController.getUser();
+    async componentDidMount() {
+        await this.userController.getUser();
+
+        this.children.emailField.setValue(this.props?.user?.email);
+        this.children.loginField.setValue(this.props?.user?.login);
+        this.children.firstNameField.setValue(this.props?.user?.first_name);
+        this.children.secondNameField.setValue(this.props?.user?.second_name);
+        this.children.displayNameField.setValue(this.props?.user?.display_name);
+        this.children.phoneField.setValue(this.props?.user?.phone);
     }
 
     public render(): DocumentFragment {
-        return this.compile(registrationTemplate);
+        return this.compile(registrationTemplate, this.props);
     }
 }
 
-export default withUser(UserSettings);
+export default withState(UserSettings);

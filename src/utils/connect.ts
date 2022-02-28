@@ -4,7 +4,8 @@ import { TRequestApi } from './types';
 
 interface IStore {
     signupReq: TRequestApi;
-    signinReq: TRequestApi;
+    createChatReq: TRequestApi;
+    profileReq: TRequestApi;
     user: {
         id: number;
         first_name: string;

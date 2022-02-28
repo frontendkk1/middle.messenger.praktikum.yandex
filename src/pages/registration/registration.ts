@@ -18,7 +18,9 @@ interface ILoginProps {
     passwordField: Input;
 }
 
-const withRegistrationApi = connect(state => ({ signupReq: { ...state.signupReq } }));
+const withRegistrationApi = connect((state) => ({
+    signupReq: { ...state.signupReq },
+}));
 
 export class Registration extends Block<ILoginProps> {
     registrationController;
@@ -110,7 +112,7 @@ export class Registration extends Block<ILoginProps> {
                         second_name: secondNameField.value,
                         phone: phoneField.value,
                         password: passwordField.value,
-                    })
+                    });
                 },
             },
         });

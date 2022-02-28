@@ -4,17 +4,18 @@ import { connect } from '~src/utils/connect';
 import { Button } from '~src/components/button/button';
 import { LeftNavigationButton } from '~src/components/left-navigation-button/left-navigation-button';
 import { Avatar } from '~src/components/avatar/avatar';
-import userTemplate from './user.tmpl.pug'
-import { UserController } from './user.controller'
+import userTemplate from './user.tmpl.pug';
+import { UserController } from './user.controller';
 import '../index.scss';
 import './user.scss';
 import '~src/components/left-navigation-button/left-navigation-button.scss';
 import '~src/components/avatar/avatar.scss';
 
-const withUser = connect(state => ({ user: state.user }));
+const withUser = connect((state) => ({ user: state.user }));
 
 class User extends Block {
     userController;
+
     router;
 
     constructor() {
@@ -30,7 +31,7 @@ class User extends Block {
         const avatar = new Avatar({
             avatar: this.props?.user?.avatar || '',
             changeHref: '/user-avatar-change',
-        })
+        });
 
         const userSettingButton = new Button({
             text: 'Изменить данные',
@@ -38,7 +39,7 @@ class User extends Block {
             events: {
                 click: (event) => {
                     event.preventDefault();
-                    this.router.go('/user-settings')
+                    this.router.go('/user-settings');
                 },
             },
         });
@@ -49,7 +50,7 @@ class User extends Block {
             events: {
                 click: (event) => {
                     event.preventDefault();
-                    this.router.go('/user-password-change')
+                    this.router.go('/user-password-change');
                 },
             },
         });

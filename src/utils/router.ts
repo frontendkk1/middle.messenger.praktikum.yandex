@@ -24,7 +24,7 @@ class Route {
     }
 
     match(pathname) {
-        return isEqual(pathname, this._pathname);
+        return isEqual(pathname.split('?')[0], this._pathname);
     }
 
     render() {
@@ -82,9 +82,9 @@ export class Router {
         route.render(route, pathname);
     }
 
-    go(pathname) {
+    go(pathname, state = {}) {
         console.log('Router: go:', pathname);
-        this.history.pushState({}, '', pathname);
+        this.history.pushState(state, '', pathname);
         this._onRoute(pathname);
     }
 

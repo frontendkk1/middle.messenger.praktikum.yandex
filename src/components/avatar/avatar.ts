@@ -23,7 +23,8 @@ export class Avatar extends Block {
             click: (event) => {
                 event.preventDefault();
 
-                if (this.props?.changeHref) this.router.go(this.props.changeHref);
+                if (this.props?.changeHref)
+                    this.router.go(this.props.changeHref);
             },
         };
     }

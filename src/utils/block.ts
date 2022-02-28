@@ -131,7 +131,6 @@ export class Block<T extends object = {}> {
         }
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public componentDidUpdate(oldProps: T, newProps: T) {
         return true;
     }

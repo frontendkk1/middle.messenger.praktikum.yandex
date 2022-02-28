@@ -28,7 +28,7 @@ export const validate = (
         case ValidationNames.MESSAGE:
             return {
                 isValid: value.length > 0,
-                message: 'Сообщение не должно быть пустым',
+                message: 'Поле не должно быть пустым',
             };
         case ValidationNames.EMAIL:
             return {

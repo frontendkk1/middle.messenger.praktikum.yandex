@@ -1,7 +1,7 @@
 import { Block } from '~src/utils/block';
 import { Router } from '~src/utils/router';
 import leftNavigationButtonTemplate from './left-navigation-button.tmpl.pug';
-import leftArrowImage from '~static/images/left-arrow.svg';
+import leftArrowImage from '../../../static/images/left-arrow.svg';
 
 export class LeftNavigationButton extends Block {
     router: Router;
@@ -22,13 +22,13 @@ export class LeftNavigationButton extends Block {
         return {
             click: (event) => {
                 event.preventDefault();
-                this.router.forward();
+                this.router.back();
             },
         };
     }
 
     public render(): DocumentFragment {
-        return this.compile(leftNavigationButtonTemplate, {leftArrowImage});
+        return this.compile(leftNavigationButtonTemplate, { leftArrowImage });
     }
 }
 

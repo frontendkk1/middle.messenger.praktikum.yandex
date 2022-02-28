@@ -15,7 +15,7 @@ interface IProfileRequest {
 
 interface IProfileResponse {
     status: number;
-    response: {reason?: string;}
+    response: { reason?: string };
 }
 
 export class UserApi extends BaseAPI {
@@ -25,6 +25,11 @@ export class UserApi extends BaseAPI {
                 data: user,
                 headers: { 'content-type': 'application/json' },
             })
-            .then((req): IProfileResponse => ({ status: req.status, response: req.response }));
+            .then(
+                (req): IProfileResponse => ({
+                    status: req.status,
+                    response: req.response,
+                })
+            );
     }
 }

@@ -19,10 +19,13 @@ interface ILoginProps {
     passwordField: Input;
 }
 
-const withLoginApi = connect(state => ({ signinReq: { ...state.signinReq } }));
+const withLoginApi = connect((state) => ({
+    createChatReq: { ...state.createChatReq },
+}));
 
 export class Login extends Block<ILoginProps> {
     loginController;
+
     router;
 
     constructor() {
@@ -73,11 +76,11 @@ export class Login extends Block<ILoginProps> {
             className: 'white',
             href: '/registration',
             events: {
-                click: event => {
+                click: (event) => {
                     event.preventDefault();
 
                     this.router.go('/registration');
-                }
+                },
             },
         });
 

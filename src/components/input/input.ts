@@ -24,7 +24,11 @@ export class Input extends Block<IInputProps> {
     }
 
     public get value(): string {
-        return (this.element as HTMLInputElement)?.value;
+        return (this.element as HTMLInputElement).value;
+    }
+
+    public setValue(value: string) {
+        (this.element as HTMLInputElement).value = value;
     }
 
     protected getEvents() {

@@ -1,10 +1,9 @@
-import { Block } from '../../utils/block';
-import { ChatsList } from './components/chats-list/chats-list';
+import { Block } from '~src/utils/block';
+import ChatsList from './components/chats-list/chats-list';
 import { MessagesList } from './components/messages-list/messages-list';
 import chatsTemplate from './chats.tmpl.pug';
 import '../index.scss';
 import './chats.scss';
-import './components/chats-list/chats-list.scss';
 import './components/messages-list/messages-list.scss';
 import fileImage from '../../../static/images/file.svg';
 import sendImage from '../../../static/images/send.svg';
@@ -43,3 +42,5 @@ export class Chats extends Block {
         });
     }
 }
+
+export default Chats;

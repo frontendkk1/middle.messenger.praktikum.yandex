@@ -14,8 +14,6 @@ export class UserController {
     public async getUser() {
         console.log('UserController: getUser:');
         try {
-            if (store.getState()?.user) return;
-
             const userResponse = await loginApi.user();
 
             if (userResponse.status === 401) {
@@ -27,10 +25,9 @@ export class UserController {
                 throw new Error(userResponse.response?.reason);
             }
 
-            store.set('user', userResponse.response)
-
+            store.set('user', userResponse.response);
         } catch (e) {
-            console.error(e)
+            console.error(e);
         }
     }
 
@@ -44,7 +41,7 @@ export class UserController {
 
             this.router.go('/login');
         } catch (e) {
-            console.error(e)
+            console.error(e);
         }
     }
 }

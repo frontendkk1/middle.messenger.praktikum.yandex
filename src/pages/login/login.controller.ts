@@ -30,19 +30,24 @@ export class LoginController {
                 throw new Error('Заполните обязательные поля');
             }
 
-            store.set('signinReq', { isLoading: true, errorMessage: '' })
+            store.set('signinReq', { isLoading: true, errorMessage: '' });
 
             const loginResponse = await loginApi.signin(data);
 
-            store.set('signinReq', { isLoading: false, errorMessage: '' })
+            store.set('signinReq', { isLoading: false, errorMessage: '' });
 
             if (loginResponse.status !== 200) {
-                throw new Error(loginResponse.response?.reason || 'Что-то пошло не так');
+                throw new Error(
+                    loginResponse.response?.reason || 'Что-то пошло не так'
+                );
             }
 
             this.router.go('/chats');
         } catch (e) {
-            store.set('signinReq', { isLoading: false, errorMessage: e.message })
+            store.set('signinReq', {
+                isLoading: false,
+                errorMessage: e.message,
+            });
         }
     }
 }

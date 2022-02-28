@@ -38,6 +38,10 @@ export default class ValidatedInput extends Block<IValidatedInputProps> {
         return this.children.loginField.value;
     }
 
+    public setValue(value: string) {
+        this.children.loginField.setValue(value);
+    }
+
     public validate(referenceValue?: string) {
         const { validationName, withoutValidationMessage } = this.props;
         const { isValid, message } = validate(

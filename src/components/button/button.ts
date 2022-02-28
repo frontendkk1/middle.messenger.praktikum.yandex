@@ -1,5 +1,6 @@
 import { Block } from '~src/utils/block';
 import submitButtonTemplate from './button.tmpl.pug';
+import './button.scss';
 
 interface ISubmitButtonProps {
     className?: string;

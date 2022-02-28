@@ -14,7 +14,7 @@ interface LoginResponse {}
 interface UserRequest {}
 
 interface UserResponse {
-    id: number,
+    id: number;
     first_name: string;
     second_name: string;
     display_name: string;
@@ -53,19 +53,17 @@ export class AuthApi extends BaseAPI {
             .then((req) => ({ status: req.status, response: req.response }));
     }
 
-    public user () {
+    public user() {
         return authAPIInstance
             .get<UserRequest, UserResponse>('/user')
-            .then(req => {
-                return { status: req.status, response: req.response }
+            .then((req) => {
+                return { status: req.status, response: req.response };
             });
     }
 
-    public logout () {
-        return authAPIInstance
-            .post('/logout')
-            .then(req => {
-                return { status: req.status, response: req.response }
-            });
+    public logout() {
+        return authAPIInstance.post('/logout').then((req) => {
+            return { status: req.status, response: req.response };
+        });
     }
 }

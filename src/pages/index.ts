@@ -4,8 +4,8 @@ import Registration from './registration/registration';
 import { NotFound } from './not-found/not-found';
 import { ServerError } from './server-error/server-error';
 import User from './user/user';
-import { UserSettings } from './user-settings/user-settings';
-import { Chats } from './chats/chats';
+import UserSettings from './user-settings/user-settings';
+import Chats from './chats/chats';
 
 const router = new Router('#app');
 
@@ -13,7 +13,7 @@ router
     .use('/', Login)
     .use('/login', Login)
     .use('/registration', Registration)
-    .use('/chats', Chats)
+    .use('/messenger', Chats)
     .use('/user', User)
     .use('/user-settings', UserSettings)
     .use('/server-error', ServerError)

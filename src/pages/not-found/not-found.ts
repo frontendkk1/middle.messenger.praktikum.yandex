@@ -1,5 +1,5 @@
-import { ErrorBlock } from '../../components/error-block/error-block';
-import { Block } from '../../utils/block';
+import { ErrorBlock } from '~src/components/error-block/error-block';
+import { Block } from '~src/utils/block';
 import notFoundTemplate from './not-found.tmpl.pug';
 import '../index.scss';
 import './not-found.scss';
@@ -15,7 +15,7 @@ export class NotFound extends Block {
             errorContent: new ErrorBlock({
                 title: '404',
                 subtitle: 'Не туда попали',
-                linkHref: '/chats',
+                linkHref: '/messenger',
                 linkText: 'Назад к чатам',
             }),
         };
