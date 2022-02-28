@@ -5,7 +5,7 @@
 
     if chats
         each item in chats
-            .chat-item
+            .chat-item(data-chat-id!= item.id)
                 .chat-item_flex
                     .chat-item__avatar
                     .chat-item-info.chat-item__info

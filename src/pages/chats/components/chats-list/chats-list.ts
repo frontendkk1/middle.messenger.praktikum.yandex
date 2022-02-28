@@ -1,6 +1,8 @@
 import { Block } from '~src/utils/block';
 import { Button } from '~src/components/button/button';
 import { Modal } from '~src/components/modal/modal';
+import { Router } from '~src/utils/router';
+import { queryString } from '~src/utils/query-string';
 import { connect } from '~src/utils/connect';
 import chatsListTemplate from './chats-list.tmpl.pug';
 import { ChatsListController } from './chats-list.controller';
@@ -10,11 +12,14 @@ import './chats-list.scss';
 const withChats = connect((state) => ({ chats: state.chats }));
 
 export class ChatsList extends Block {
+    router;
+
     chatsController;
 
     constructor() {
         super('div');
 
+        this.router = new Router('');
         this.chatsController = new ChatsListController();
     }
 
@@ -38,6 +43,21 @@ export class ChatsList extends Block {
         return {
             createChatButton,
             createChatModal,
+        };
+    }
+
+    protected getEvents(): Record<string, (e: Event) => void> {
+        return {
+            click: (event) => {
+                const chatItem = event.target.closest('.chat-item');
+                if (chatItem) {
+                    this.router.go(
+                        `/messenger?${queryString({
+                            chat_id: chatItem.dataset.chatId,
+                        })}`
+                    );
+                }
+            },
         };
     }
 
