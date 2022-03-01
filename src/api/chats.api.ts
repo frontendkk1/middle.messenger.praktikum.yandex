@@ -70,4 +70,12 @@ export class ChatsApi extends BaseAPI {
             })
             .then((req) => ({ status: req.status, response: req.response }));
     }
+
+    public getChatCommon(data: { id: number }) {
+        return chatsAPIInstance
+            .get(`/${data.id}/common`, {
+                headers: { 'content-type': 'application/json' },
+            })
+            .then((req) => ({ status: req.status, response: req.response }));
+    }
 }

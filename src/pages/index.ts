@@ -6,6 +6,10 @@ import { ServerError } from './server-error/server-error';
 import User from './user/user';
 import UserSettings from './user-settings/user-settings';
 import Chats from './chats/chats';
+import { Tooltip } from '~src/components/tooltip/tooltip';
+
+const tooltip = new Tooltip();
+tooltip.attachClick(document.body);
 
 const router = new Router('#app');
 
