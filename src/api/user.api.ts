@@ -18,6 +18,26 @@ interface IProfileResponse {
     response: { reason?: string };
 }
 
+interface ISearchRequest {
+    login: string;
+}
+
+interface ISearchResponse {
+    status: number;
+    response:
+        | {
+              id: number;
+              first_name: string;
+              second_name: string;
+              display_name: string;
+              login: string;
+              email: string;
+              phone: string;
+              avatar: string;
+          }[]
+        | { reason: string };
+}
+
 export class UserApi extends BaseAPI {
     public profile(user: IProfileRequest) {
         return userAPIInstance
@@ -27,6 +47,20 @@ export class UserApi extends BaseAPI {
             })
             .then(
                 (req): IProfileResponse => ({
+                    status: req.status,
+                    response: req.response,
+                })
+            );
+    }
+
+    public search(data: ISearchRequest) {
+        return userAPIInstance
+            .post('/search', {
+                data,
+                headers: { 'content-type': 'application/json' },
+            })
+            .then(
+                (req): ISearchResponse => ({
                     status: req.status,
                     response: req.response,
                 })

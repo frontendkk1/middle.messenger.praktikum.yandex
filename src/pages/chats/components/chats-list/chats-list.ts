@@ -49,7 +49,7 @@ export class ChatsList extends Block {
     protected getEvents(): Record<string, (e: Event) => void> {
         return {
             click: (event) => {
-                const chatItem = event.target.closest('.chat-item');
+                const chatItem = event.target.closest('[data-chat-id]');
                 if (chatItem) {
                     this.router.go(
                         `/messenger?${queryString({

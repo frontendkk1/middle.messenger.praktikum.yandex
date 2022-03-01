@@ -23,8 +23,7 @@ export class CreateChatFormController {
 
             store.set('createChatReq', { isLoading: true, errorMessage: '' });
 
-            // const createChatResponse = await chatsApi.createChat(data);
-            const createChatResponse = { status: 200, response: { id: 123 } };
+            const createChatResponse = await chatsApi.createChat(data);
 
             store.set('createChatReq', { isLoading: false, errorMessage: '' });
 
