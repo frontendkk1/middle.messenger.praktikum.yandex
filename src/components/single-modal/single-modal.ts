@@ -26,7 +26,6 @@ export class SingleModal {
 
     attach() {
         document.body.addEventListener('click', (event) => {
-            event.preventDefault();
             if (event.target === this.getContent()) {
                 this.hide();
             }

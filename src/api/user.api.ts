@@ -63,6 +63,19 @@ export class UserApi extends BaseAPI {
             );
     }
 
+    public avatar(avatar) {
+        return userAPIInstance
+            .put('/profile/avatar', {
+                data: avatar,
+            })
+            .then(
+                (req): ISearchResponse => ({
+                    status: req.status,
+                    response: req.response,
+                })
+            );
+    }
+
     public search(data: ISearchRequest) {
         return userAPIInstance
             .post('/search', {

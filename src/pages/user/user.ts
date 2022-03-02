@@ -3,7 +3,7 @@ import { Router } from '~src/utils/router';
 import { connect } from '~src/utils/connect';
 import { Button } from '~src/components/button/button';
 import { LeftNavigationButton } from '~src/components/left-navigation-button/left-navigation-button';
-import { Avatar } from '~src/components/avatar/avatar';
+import Avatar from '~src/components/avatar/avatar';
 import userTemplate from './user.tmpl.pug';
 import { UserController } from './user.controller';
 import { PagesPath } from '~src/utils/constants';
@@ -30,8 +30,7 @@ class User extends Block {
         const leftNavigationButton = new LeftNavigationButton();
 
         const avatar = new Avatar({
-            avatar: this.props?.user?.avatar || '',
-            changeHref: '/user-avatar-change',
+            changeHref: PagesPath.USER_AVATAR,
         });
 
         const userSettingButton = new Button({

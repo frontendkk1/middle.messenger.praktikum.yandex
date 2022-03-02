@@ -5,6 +5,7 @@ export interface IInputProps {
     classNames?: string;
     placeholder: string;
     name: string;
+    id?: string;
     type: string;
     events?: Record<string, (e: Event) => void>;
 }
@@ -18,7 +19,8 @@ export class Input extends Block<IInputProps> {
         return {
             class: `${this.props.classNames || ''}`,
             placeholder: this.props.placeholder,
-            inputName: this.props.name,
+            id: this.props.id,
+            name: this.props.name,
             type: this.props.type,
         };
     }

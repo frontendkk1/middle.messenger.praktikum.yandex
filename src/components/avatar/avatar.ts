@@ -1,9 +1,17 @@
 import { Block } from '~src/utils/block';
 import { Router } from '~src/utils/router';
+import { API_HOST } from '~src/utils/constants';
 import avatarTemplate from './avatar.tmpl.pug';
 import unionImage from '../../../static/images/union.svg';
+import { connect } from '~src/utils/connect';
 
-export class Avatar extends Block {
+const withAvatar = connect((state) => ({
+    avatar: state.user?.avatar
+        ? `${API_HOST}/resources${state.user.avatar}`
+        : '',
+}));
+
+class Avatar extends Block {
     router: Router;
 
     constructor(props) {
@@ -36,4 +44,4 @@ export class Avatar extends Block {
     }
 }
 
-export default Avatar;
+export default withAvatar(Avatar);

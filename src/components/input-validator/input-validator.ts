@@ -5,7 +5,8 @@ import inputValidatorTemplate from './input-validator.tmpl.pug';
 
 interface IValidatedInputProps extends IInputProps {
     isValid: boolean;
-    validationName: ValidationNames;
+    id?: string;
+    validationName?: ValidationNames;
     validationMessage?: string;
     withoutValidationMessage?: boolean;
 }
@@ -32,6 +33,10 @@ export default class ValidatedInput extends Block<IValidatedInputProps> {
         return {
             class: 'input-field validated-input',
         };
+    }
+
+    protected getEvents(): Record<string, (e: Event) => void> {
+        return this.props?.events || {};
     }
 
     public get value(): string {

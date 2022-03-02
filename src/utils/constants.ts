@@ -8,5 +8,6 @@ export enum PagesPath {
     USER = '/profile',
     USER_SETTINGS = '/settings',
     USER_PASSWORD = '/user-password-change',
+    USER_AVATAR = '/user-avatar-change',
     SERVER_ERROR = '/server-error',
 }
