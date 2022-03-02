@@ -3,6 +3,7 @@ import { Router } from '~src/utils/router';
 import { validate, ValidationNames } from '~src/utils/validator';
 import store from '~src/utils/store';
 import { queryString } from '~src/utils/query-string';
+import { PagesPath } from '~src/utils/constants';
 
 const chatsApi = new ChatsApi();
 
@@ -34,7 +35,7 @@ export class CreateChatFormController {
             }
 
             this.router.go(
-                `/messenger?${queryString({
+                `${PagesPath.CHATS}?${queryString({
                     chat_id: createChatResponse.response.id,
                 })}`
             );

@@ -2,6 +2,7 @@ import { AuthApi } from '~src/api/auth.api';
 import { Router } from '~src/utils/router';
 import { validate, ValidationNames } from '~src/utils/validator';
 import store from '~src/utils/store';
+import { PagesPath } from '~src/utils/constants';
 
 interface RegistrationFormModel {
     first_name: string;
@@ -69,7 +70,7 @@ export class RegistrationController {
                 );
             }
 
-            this.router.go('/chats');
+            this.router.go(PagesPath.CHATS);
         } catch (e) {
             console.log(e);
             store.set('signupReq', {

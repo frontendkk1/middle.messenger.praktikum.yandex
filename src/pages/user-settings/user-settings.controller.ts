@@ -2,6 +2,7 @@ import { UserApi } from '~src/api/user.api';
 import { Router } from '~src/utils/router';
 import { validate, ValidationNames } from '~src/utils/validator';
 import store from '~src/utils/store';
+import { PagesPath } from '~src/utils/constants';
 
 interface UserSettingsFormModel {
     first_name: string;
@@ -64,7 +65,7 @@ export class UserSettingsController {
 
             store.set('user', profileResponse.response);
 
-            this.router.go('/user');
+            this.router.go(PagesPath.USER);
         } catch (e) {
             console.log(e);
             store.set('profileReq', {

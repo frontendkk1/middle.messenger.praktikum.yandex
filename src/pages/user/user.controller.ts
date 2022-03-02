@@ -1,6 +1,7 @@
 import { AuthApi } from '~src/api/auth.api';
 import { Router } from '~src/utils/router';
 import store from '~src/utils/store';
+import { PagesPath } from '~src/utils/constants';
 
 const loginApi = new AuthApi();
 
@@ -17,7 +18,7 @@ export class UserController {
             const userResponse = await loginApi.user();
 
             if (userResponse.status === 401) {
-                this.router.go('/login');
+                this.router.go(PagesPath.LOGIN);
                 return;
             }
 
@@ -39,7 +40,7 @@ export class UserController {
                 throw new Error(logoutResponse.response.reason);
             }
 
-            this.router.go('/login');
+            this.router.go(PagesPath.LOGIN);
         } catch (e) {
             console.error(e);
         }

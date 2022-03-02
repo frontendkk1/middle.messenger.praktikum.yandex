@@ -13,6 +13,7 @@ import { Button } from '~src/components/button/button';
 import { ValidationNames } from '~src/utils/validator';
 import { Router } from '~src/utils/router';
 import { connect } from '~src/utils/connect';
+import { PagesPath } from '~src/utils/constants';
 
 interface ILoginProps {
     loginField: Input;
@@ -79,7 +80,7 @@ export class Login extends Block<ILoginProps> {
                 click: (event) => {
                     event.preventDefault();
 
-                    this.router.go('/registration');
+                    this.router.go(PagesPath.REGISTRATION);
                 },
             },
         });

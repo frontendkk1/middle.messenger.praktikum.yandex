@@ -2,6 +2,7 @@ import { AuthApi } from '~src/api/auth.api';
 import { Router } from '~src/utils/router';
 import { validate, ValidationNames } from '~src/utils/validator';
 import store from '~src/utils/store';
+import { PagesPath } from '~src/utils/constants';
 
 interface LoginFormModel {
     login: string;
@@ -42,7 +43,7 @@ export class LoginController {
                 );
             }
 
-            this.router.go('/chats');
+            this.router.go(PagesPath.CHATS);
         } catch (e) {
             store.set('signinReq', {
                 isLoading: false,

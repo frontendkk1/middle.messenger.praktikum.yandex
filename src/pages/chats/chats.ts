@@ -1,31 +1,42 @@
 import { Block } from '~src/utils/block';
 import ChatsList from './components/chats-list/chats-list';
-import { MessagesList } from './components/messages-list/messages-list';
+import { Button } from '~src/components/button/button';
+import { PagesPath } from '~src/utils/constants';
 import ChatArea from './components/chat-area/chat-area';
 import chatsTemplate from './chats.tmpl.pug';
 import '../index.scss';
 import './chats.scss';
-import './components/messages-list/messages-list.scss';
-import fileImage from '../../../static/images/file.svg';
-import sendImage from '../../../static/images/send.svg';
-import arrowImage from '../../../static/images/arrow.svg';
+import { Router } from '~src/utils/router';
 
 export class Chats extends Block {
+    router;
+
     constructor() {
         super('div');
 
         this.setState({ activeChatId: null });
+        this.router = new Router('');
     }
 
     protected getChildren(): Record<string, Block> {
         const chatsList = new ChatsList();
-        const messagesList = new MessagesList();
         const chatArea = new ChatArea();
+
+        const userButton = new Button({
+            className: 'white',
+            text: 'Профиль',
+            events: {
+                click: (event) => {
+                    event.preventDefault();
+                    this.router.go(PagesPath.USER);
+                },
+            },
+        });
 
         return {
             chatsList,
             chatArea,
-            messagesList,
+            userButton,
         };
     }
 
@@ -36,11 +47,7 @@ export class Chats extends Block {
     }
 
     public render(): DocumentFragment {
-        return this.compile(chatsTemplate, {
-            sendImage,
-            fileImage,
-            arrowImage,
-        });
+        return this.compile(chatsTemplate);
     }
 }
 

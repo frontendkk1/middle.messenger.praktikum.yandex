@@ -7,6 +7,7 @@ import User from './user/user';
 import UserSettings from './user-settings/user-settings';
 import Chats from './chats/chats';
 import { Tooltip } from '~src/components/tooltip/tooltip';
+import { PagesPath } from '~src/utils/constants';
 
 const tooltip = new Tooltip();
 tooltip.attachClick(document.body);
@@ -14,12 +15,12 @@ tooltip.attachClick(document.body);
 const router = new Router('#app');
 
 router
-    .use('/', Login)
-    .use('/login', Login)
-    .use('/registration', Registration)
-    .use('/messenger', Chats)
-    .use('/user', User)
-    .use('/user-settings', UserSettings)
-    .use('/server-error', ServerError)
+    .use(PagesPath.MAIN, Login)
+    .use(PagesPath.LOGIN, Login)
+    .use(PagesPath.REGISTRATION, Registration)
+    .use(PagesPath.CHATS, Chats)
+    .use(PagesPath.USER, User)
+    .use(PagesPath.USER_SETTINGS, UserSettings)
+    .use(PagesPath.SERVER_ERROR, ServerError)
     .use('*', NotFound)
     .start();

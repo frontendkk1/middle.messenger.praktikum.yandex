@@ -4,6 +4,7 @@ import { Modal } from '~src/components/modal/modal';
 import { Router } from '~src/utils/router';
 import { queryString } from '~src/utils/query-string';
 import { connect } from '~src/utils/connect';
+import { PagesPath } from '~src/utils/constants';
 import chatsListTemplate from './chats-list.tmpl.pug';
 import { ChatsListController } from './chats-list.controller';
 import CreateChatForm from '../create-chat-form/create-chat-form';
@@ -52,7 +53,7 @@ export class ChatsList extends Block {
                 const chatItem = event.target.closest('[data-chat-id]');
                 if (chatItem) {
                     this.router.go(
-                        `/messenger?${queryString({
+                        `${PagesPath.CHATS}?${queryString({
                             chat_id: chatItem.dataset.chatId,
                         })}`
                     );

@@ -5,7 +5,7 @@ import { validate, ValidationNames } from '~src/utils/validator';
 import store from '~src/utils/store';
 import singleModal from '~src/components/single-modal/single-modal';
 import { getQuery } from '~src/utils/get-query';
-import { queryString } from '~src/utils/query-string';
+import { PagesPath } from '~src/utils/constants';
 import { Router } from '~src/utils/router';
 
 const userApi = new UserApi();
@@ -174,7 +174,7 @@ export class ChatUsersFormController {
             }
 
             singleModal.hide();
-            this.router.go('/messenger');
+            this.router.go(PagesPath.CHATS);
         } catch (e) {
             console.error(e);
             store.set('deleteChatsReq', {
