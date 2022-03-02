@@ -89,24 +89,6 @@ export class UserSettings extends Block {
             classNames: 'input-field__input',
         });
 
-        // const oldPasswordField = new ValidatedInput({
-        //     isValid: false,
-        //     validationName: ValidationNames.PASSWORD,
-        //     placeholder: 'Пароль',
-        //     name: 'oldPassword',
-        //     type: 'password',
-        //     classNames: 'input-field__input',
-        // });
-        //
-        // const newPasswordField = new ValidatedInput({
-        //     isValid: false,
-        //     validationName: ValidationNames.PASSWORD,
-        //     placeholder: 'Пароль',
-        //     name: 'newPassword',
-        //     type: 'password',
-        //     classNames: 'input-field__input',
-        // });
-
         const validatedInputList: ValidatedInput[] = [
             emailField,
             loginField,

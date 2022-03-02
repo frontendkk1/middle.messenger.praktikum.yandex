@@ -38,6 +38,16 @@ interface ISearchResponse {
         | { reason: string };
 }
 
+export interface IPasswordRequest {
+    oldPassword: string;
+    newPassword: string;
+}
+
+interface IPasswordResponse {
+    status: number;
+    response: string | { reason: string };
+}
+
 export class UserApi extends BaseAPI {
     public profile(user: IProfileRequest) {
         return userAPIInstance
@@ -61,6 +71,20 @@ export class UserApi extends BaseAPI {
             })
             .then(
                 (req): ISearchResponse => ({
+                    status: req.status,
+                    response: req.response,
+                })
+            );
+    }
+
+    public password(data: IPasswordRequest) {
+        return userAPIInstance
+            .put('/password', {
+                data,
+                headers: { 'content-type': 'application/json' },
+            })
+            .then(
+                (req): IPasswordResponse => ({
                     status: req.status,
                     response: req.response,
                 })
