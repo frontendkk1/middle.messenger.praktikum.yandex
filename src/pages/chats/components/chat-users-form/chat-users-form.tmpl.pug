@@ -23,9 +23,22 @@ case view
             if backButton
                 div.form__field
                     != backButton
+    when 'users'
+        p Пользователи
+        if chatUsers
+            ul
+                each user in chatUsers
+                    li!= user.login
+        if backButton
+            div.form__field
+                != backButton
     default
+        div
+            != deleteChatButton
         div
             != addUserButton
         div
             != removeUserButton
+        div
+            != usersButton
 

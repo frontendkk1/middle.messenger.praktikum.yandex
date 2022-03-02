@@ -51,3 +51,5 @@ export class SingleModal {
         this.getContent()?.classList.add('modal-hidden');
     }
 }
+
+export default new SingleModal();

@@ -11,13 +11,15 @@ export enum Views {
     MENU = 'menu',
     ADD = 'add',
     DELETE = 'delete',
+    USERS = 'users',
 }
 
 const withStore = connect((state) => ({
+    chatUsers: { ...state.chatUsers },
     addUserToChatReq: { ...state.addUserToChatReq },
 }));
 
-export class ChatUsersForm extends Block<{ chatId: number; view: string }> {
+export class ChatUsersForm extends Block {
     chatUsersFormController;
 
     constructor() {
@@ -29,6 +31,17 @@ export class ChatUsersForm extends Block<{ chatId: number; view: string }> {
     }
 
     protected getChildren(): Record<string, Block> {
+        const deleteChatButton = new Button({
+            className: 'white',
+            text: 'Удалить чат',
+            events: {
+                click: (event) => {
+                    event.preventDefault();
+                    this.chatUsersFormController.deleteChat();
+                },
+            },
+        });
+
         const addUserButton = new Button({
             className: 'white',
             text: 'Добавить пользователя',
@@ -47,6 +60,17 @@ export class ChatUsersForm extends Block<{ chatId: number; view: string }> {
                 click: (event) => {
                     event.preventDefault();
                     this.setState({ view: Views.DELETE });
+                },
+            },
+        });
+
+        const usersButton = new Button({
+            className: 'white',
+            text: 'Пользователи',
+            events: {
+                click: (event) => {
+                    event.preventDefault();
+                    this.setState({ view: Views.USERS });
                 },
             },
         });
@@ -92,12 +116,19 @@ export class ChatUsersForm extends Block<{ chatId: number; view: string }> {
             events: {
                 click: (event) => {
                     event.preventDefault();
+
+                    this.chatUsersFormController.deleteUser({
+                        login: loginField.value,
+                        chatId: this.props.chatId,
+                    });
                 },
             },
         });
 
         return {
+            usersButton,
             backButton,
+            deleteChatButton,
             loginField,
             submitAddButton,
             submitDeleteButton,
@@ -106,8 +137,15 @@ export class ChatUsersForm extends Block<{ chatId: number; view: string }> {
         };
     }
 
+    public componentDidMount() {
+        this.chatUsersFormController.getUsers();
+    }
+
     public render() {
-        return this.compile(chatUsersFormTemplate, { view: this.state?.view });
+        return this.compile(chatUsersFormTemplate, {
+            ...this.props,
+            view: this.state?.view,
+        });
     }
 }
 

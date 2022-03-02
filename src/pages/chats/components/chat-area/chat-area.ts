@@ -1,14 +1,12 @@
 import { Block } from '~src/utils/block';
 import { connect } from '~src/utils/connect';
 import { getQuery } from '~src/utils/get-query';
-import { SingleModal } from '~src/components/single-modal/single-modal';
-import { ChatUsersForm } from '../chat-users-form/chat-users-form';
+import singleModal from '~src/components/single-modal/single-modal';
+import ChatUsersForm from '../chat-users-form/chat-users-form';
 import { ChatAreaController } from './chat-area.controller';
 import chatAreaTemplate from './chat-area.tmpl.pug';
 import hamburgerImage from '../../../../../static/images/hamburger.svg';
 import './chat-area.scss';
-
-const singleModal = new SingleModal();
 
 const withStore = connect((state) => ({
     chats: state.chats,
@@ -16,19 +14,22 @@ const withStore = connect((state) => ({
 }));
 
 export class ChatArea extends Block {
-    chatsAreaControler;
+    chatsAreaController;
 
     constructor() {
         super('div');
 
-        this.chatsAreaControler = new ChatAreaController();
+        this.chatsAreaController = new ChatAreaController();
     }
 
     protected getEvents(): Record<string, (e: Event) => void> {
         return {
             click: (event) => {
                 event.preventDefault();
-                if (event.target.matches('.chat-menu__hamburger')) {
+                if (
+                    event.target.matches('.chat-menu__hamburger') ||
+                    event.target.closest('.chat-menu__hamburger')
+                ) {
                     singleModal.show(new ChatUsersForm());
                 }
             },
