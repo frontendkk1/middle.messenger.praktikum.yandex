@@ -86,4 +86,12 @@ export class ChatsApi extends BaseAPI {
             })
             .then((req) => ({ status: req.status, response: req.response }));
     }
+
+    public getToken(data: { id: number }) {
+        return chatsAPIInstance
+            .post(`/token/${data.id}`, {
+                headers: { 'content-type': 'application/json' },
+            })
+            .then((req) => ({ status: req.status, response: req.response }));
+    }
 }

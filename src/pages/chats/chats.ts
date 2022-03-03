@@ -7,15 +7,19 @@ import chatsTemplate from './chats.tmpl.pug';
 import '../index.scss';
 import './chats.scss';
 import { Router } from '~src/utils/router';
+import { AuthController } from '~src/controllers/auth.controller';
 
 export class Chats extends Block {
     router;
+
+    authController;
 
     constructor() {
         super('div');
 
         this.setState({ activeChatId: null });
         this.router = new Router('');
+        this.authController = new AuthController();
     }
 
     protected getChildren(): Record<string, Block> {
@@ -44,6 +48,10 @@ export class Chats extends Block {
         return {
             class: 'chats-wrapper',
         };
+    }
+
+    public componentDidMount() {
+        this.authController.checkAuth();
     }
 
     public render(): DocumentFragment {

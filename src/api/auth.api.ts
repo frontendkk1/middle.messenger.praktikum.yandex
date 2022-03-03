@@ -38,7 +38,7 @@ export class AuthApi extends BaseAPI {
     public signin(user: LoginRequest) {
         return authAPIInstance
             .post<LoginRequest, LoginResponse>('/signin', {
-                data: user,
+                data: JSON.stringify(user),
                 headers: { 'content-type': 'application/json' },
             })
             .then((req) => ({ status: req.status, response: req.response }));

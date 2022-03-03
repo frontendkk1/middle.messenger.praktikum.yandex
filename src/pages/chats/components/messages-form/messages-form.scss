@@ -1,0 +1,19 @@
+.message-form_flex {
+    display: flex;
+    align-items: center;
+    padding: 11px 0;
+    border-top: 1px solid #EAEAEA;
+}
+.message-form__input {
+    width: 100%;
+    margin: 0 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 30px;
+    background-color: #EFEFEF;
+}
+.message-form__send {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}

@@ -3,12 +3,12 @@
         .messages-list__item
             .message(
                 class=message.type === 'date' && 'message_date'
-                class=message.type === 'text' && 'message_text'
+                class=message.type === 'message' && 'message_text'
                 class=message.type === 'img' && 'message_img'
                 class=message.type === 'me' && 'message_me'
             )
                 .message__content-wrapper
-                    if message.time
+                    if message.time1
                         p.message__time= message.time
                     .message__content
                         != message.content
