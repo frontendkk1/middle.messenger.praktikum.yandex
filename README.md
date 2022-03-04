@@ -34,4 +34,4 @@
 - Файлы с расширением `*.pug` компилируются с помощью плагина `@parcel/transformer-pug`. В них хранится layout страницы.
 - Логика с компиляцией шаблонов лежит в файлах `./src/pages/**/*.js`
 
-[Pull request, sprint 2](https://github.com/frontendkk1/middle.messenger.praktikum.yandex/pull/2)
+[Pull request, sprint 3](https://github.com/frontendkk1/middle.messenger.praktikum.yandex/pull/3)
