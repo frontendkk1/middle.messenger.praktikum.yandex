@@ -12,6 +12,9 @@ import ValidatedInput from '../../components/input-validator/input-validator';
 import { Button } from '~src/components/button/button';
 import { ValidationNames } from '~src/utils/validator';
 import { RegistrationController } from './registration.controller';
+import { PagesPath } from '~src/utils/constants';
+import { Router } from '~src/utils/router';
+import { AuthController } from '~src/controllers/auth.controller';
 
 interface ILoginProps {
     loginField: Input;
@@ -24,11 +27,15 @@ const withRegistrationApi = connect((state) => ({
 
 export class Registration extends Block<ILoginProps> {
     registrationController;
+    authController;
+    router;
 
     constructor() {
         super('main');
 
         this.registrationController = new RegistrationController();
+        this.authController = new AuthController();
+        this.router = new Router('');
     }
 
     protected getChildren(): Record<string, Block> {
@@ -120,7 +127,13 @@ export class Registration extends Block<ILoginProps> {
         const loginButton = new Button({
             text: 'Войти',
             className: 'white',
-            href: '/login',
+            events: {
+                click: (event) => {
+                    event.preventDefault();
+
+                    this.router.go(PagesPath.LOGIN);
+                },
+            },
         });
 
         return {
@@ -139,6 +152,12 @@ export class Registration extends Block<ILoginProps> {
         return {
             class: 'main',
         };
+    }
+
+    public async componentDidMount() {
+        const isAuth = await this.authController.checkAuth();
+
+        if (isAuth) this.router.go(PagesPath.CHATS)
     }
 
     public render(): DocumentFragment {

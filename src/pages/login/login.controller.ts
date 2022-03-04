@@ -37,6 +37,10 @@ export class LoginController {
 
             store.set('signinReq', { isLoading: false, errorMessage: '' });
 
+            if (loginResponse.status === 400) {
+                this.router.go(PagesPath.CHATS);
+            }
+
             if (loginResponse.status !== 200) {
                 throw new Error(
                     loginResponse.response?.reason || 'Что-то пошло не так'

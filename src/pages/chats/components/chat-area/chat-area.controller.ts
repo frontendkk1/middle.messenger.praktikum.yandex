@@ -55,6 +55,8 @@ export class ChatAreaController {
 
     public async getToken({ chatId }) {
         try {
+            if (!chatId) throw new Error('');
+
             const state = store.getState();
 
             if (state?.chatsToken && state.chatsToken[chatId]?.token) {

@@ -1,11 +1,8 @@
 import { Block } from '~src/utils/block';
 import { LoginController } from './login.controller';
+import { AuthController } from '~src/controllers/auth.controller';
 import '../index.scss';
 import './login.scss';
-import '~src/components/form/form.scss';
-import '~src/components/input/input.scss';
-import '~src/components/input-validator/input-validator.scss';
-import '~src/components/button/button.scss';
 import { Input } from '~src/components/input/Input';
 import loginTemplate from './login.tmpl.pug';
 import ValidatedInput from '~src/components/input-validator/input-validator';
@@ -21,17 +18,19 @@ interface ILoginProps {
 }
 
 const withLoginApi = connect((state) => ({
-    createChatReq: { ...state.createChatReq },
+    user: { ...state.user },
+    signinReq: { ...state.signinReq },
 }));
 
 export class Login extends Block<ILoginProps> {
     loginController;
-
+    authController;
     router;
 
     constructor() {
         super('main');
 
+        this.authController = new AuthController();
         this.loginController = new LoginController();
         this.router = new Router('');
     }
@@ -97,6 +96,12 @@ export class Login extends Block<ILoginProps> {
         return {
             class: 'main',
         };
+    }
+
+    public async componentDidMount() {
+        const isAuth = await this.authController.checkAuth();
+
+        if (isAuth) this.router.go(PagesPath.CHATS)
     }
 
     public render(): DocumentFragment {

@@ -16,15 +16,14 @@ export class AuthController {
         try {
             const state = store.getState();
 
-            if (state?.user) {
-                return;
+            if (state.user) {
+                return true;
             }
 
             const userResponse = await loginApi.user();
 
-            if (userResponse.status === 401) {
-                this.router.go(PagesPath.LOGIN);
-                return;
+            if (userResponse.status === 400) {
+                return true;
             }
 
             if (userResponse.status !== 200) {
@@ -32,6 +31,10 @@ export class AuthController {
             }
 
             store.set('user', userResponse.response);
-        } catch (e) {}
+
+            return true;
+        } catch (e) {
+            return false;
+        }
     }
 }
