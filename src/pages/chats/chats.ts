@@ -50,8 +50,10 @@ export class Chats extends Block {
         };
     }
 
-    public componentDidMount() {
-        this.authController.checkAuth();
+    public async componentDidMount() {
+        const isAuth = await this.authController.checkAuth();
+
+        if (!isAuth) this.router.go(PagesPath.LOGIN)
     }
 
     public render(): DocumentFragment {

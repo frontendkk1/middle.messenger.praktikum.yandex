@@ -40,6 +40,7 @@ export class UserController {
                 throw new Error(logoutResponse.response.reason);
             }
 
+            store.set('user', undefined)
             this.router.go(PagesPath.LOGIN);
         } catch (e) {
             console.error(e);
