@@ -12,9 +12,6 @@ export class ChatAreaController {
     public async initChat({ chatId }) {
         try {
             const state = store.getState();
-            console.log(
-                `${API_WS_HOST}/chats/${state.user.id}/${chatId}/${state.chatsToken[chatId].token}`
-            );
             if (!chatId || !state?.user || !state.chatsToken[chatId]?.token) {
                 return;
             }
@@ -26,7 +23,7 @@ export class ChatAreaController {
             this.socket.addEventListener('open', () => {
                 this.socket.send(
                     JSON.stringify({
-                        content: '0',
+                        content: '10',
                         type: 'get old',
                     })
                 );
@@ -42,6 +39,8 @@ export class ChatAreaController {
                         : [messages].concat(store.getState().messages)
                 );
             });
+
+            this.socket.addEventListener('error', (event) => {});
         } catch (e) {}
     }
 
