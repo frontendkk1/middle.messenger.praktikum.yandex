@@ -3,11 +3,15 @@ import { Router } from '~src/utils/router';
 import leftNavigationButtonTemplate from './left-navigation-button.tmpl.pug';
 import leftArrowImage from '../../../static/images/left-arrow.svg';
 
-export class LeftNavigationButton extends Block {
+interface ILeftNavigationButtonProps {
+    path?: string;
+}
+
+class LeftNavigationButton extends Block<ILeftNavigationButtonProps> {
     router: Router;
 
-    constructor() {
-        super('button');
+    constructor(props: ILeftNavigationButtonProps) {
+        super('button', props);
 
         this.router = new Router('');
     }
@@ -22,7 +26,11 @@ export class LeftNavigationButton extends Block {
         return {
             click: (event) => {
                 event.preventDefault();
-                this.router.back();
+                if (this.props?.path) {
+                    this.router.go(this.props.path);
+                } else {
+                    this.router.back();
+                }
             },
         };
     }

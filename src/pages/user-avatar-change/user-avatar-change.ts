@@ -3,9 +3,10 @@ import { connect } from '~src/utils/connect';
 import userAvatarChange from './user-avatar-change.tmpl.pug';
 import ValidatedInput from '~src/components/input-validator/input-validator';
 import { Button } from '~src/components/button/button';
-import { LeftNavigationButton } from '~src/components/left-navigation-button/left-navigation-button';
+import LeftNavigationButton from '~src/components/left-navigation-button/left-navigation-button';
 import { UserAvatarChangeController } from './user-avatar-change.controller';
 import './user-avatar-change.scss';
+import { PagesPath } from '~src/utils/constants';
 
 const withStore = connect((state) => ({ state }));
 
@@ -25,7 +26,7 @@ class UserAvatarChange extends Block {
     }
 
     protected getChildren(): Record<string, Block> {
-        const leftNavigationButton = new LeftNavigationButton();
+        const leftNavigationButton = new LeftNavigationButton({ path: PagesPath.USER });
 
         const fileField = new ValidatedInput({
             isValid: true,

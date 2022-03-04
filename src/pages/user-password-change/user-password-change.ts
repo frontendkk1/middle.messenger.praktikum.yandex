@@ -4,8 +4,9 @@ import userPasswordChange from './user-password-change.tmpl.pug';
 import ValidatedInput from '~src/components/input-validator/input-validator';
 import { ValidationNames } from '~src/utils/validator';
 import { Button } from '~src/components/button/button';
-import { LeftNavigationButton } from '~src/components/left-navigation-button/left-navigation-button';
+import LeftNavigationButton from '~src/components/left-navigation-button/left-navigation-button';
 import { UserPasswordChangeController } from './user-password-change.controller';
+import { PagesPath } from '~src/utils/constants';
 
 const withStore = connect((state) => ({ state }));
 
@@ -25,7 +26,7 @@ class UserPasswordChange extends Block {
     }
 
     protected getChildren(): Record<string, Block> {
-        const leftNavigationButton = new LeftNavigationButton();
+        const leftNavigationButton = new LeftNavigationButton({ path: PagesPath.USER });
 
         const oldPasswordField = new ValidatedInput({
             isValid: false,

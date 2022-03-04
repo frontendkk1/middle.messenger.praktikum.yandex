@@ -2,7 +2,7 @@ import { Block } from '~src/utils/block';
 import { Router } from '~src/utils/router';
 import { connect } from '~src/utils/connect';
 import { Button } from '~src/components/button/button';
-import { LeftNavigationButton } from '~src/components/left-navigation-button/left-navigation-button';
+import LeftNavigationButton from '~src/components/left-navigation-button/left-navigation-button';
 import Avatar from '~src/components/avatar/avatar';
 import userTemplate from './user.tmpl.pug';
 import { UserController } from './user.controller';
@@ -27,7 +27,7 @@ class User extends Block {
     }
 
     protected getChildren(): Record<string, Block> {
-        const leftNavigationButton = new LeftNavigationButton();
+        const leftNavigationButton = new LeftNavigationButton({ path: PagesPath.CHATS });
 
         const avatar = new Avatar({
             changeHref: PagesPath.USER_AVATAR,

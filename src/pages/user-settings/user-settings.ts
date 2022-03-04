@@ -12,8 +12,9 @@ import { ValidationNames } from '~src/utils/validator';
 import { UserSettingsController } from './user-settings.controller';
 import { UserController } from '../user/user.controller';
 import { connect } from '~src/utils/connect';
-import { LeftNavigationButton } from '~src/components/left-navigation-button/left-navigation-button';
+import LeftNavigationButton from '~src/components/left-navigation-button/left-navigation-button';
 import '~src/components/left-navigation-button/left-navigation-button.scss';
+import { PagesPath } from '~src/utils/constants';
 
 const withState = connect((state) => ({
     user: state.user,
@@ -33,7 +34,7 @@ export class UserSettings extends Block {
     }
 
     protected getChildren(): Record<string, Block> {
-        const leftNavigationButton = new LeftNavigationButton();
+        const leftNavigationButton = new LeftNavigationButton({ path: PagesPath.USER });
 
         const emailField = new ValidatedInput({
             isValid: false,
