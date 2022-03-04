@@ -72,7 +72,6 @@ export class RegistrationController {
 
             this.router.go(PagesPath.CHATS);
         } catch (e) {
-            console.log(e);
             store.set('signupReq', {
                 isLoading: false,
                 errorMessage: e.message,

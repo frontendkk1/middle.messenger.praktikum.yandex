@@ -6,7 +6,6 @@ const chatsApi = new ChatsApi();
 
 export class ChatsListController {
     public async getChats() {
-        console.log('ChatsListController: getChats:');
         try {
             store.set('chatsReq', { isLoading: true, errorMessage: '' });
 
@@ -31,7 +30,6 @@ export class ChatsListController {
     }
 
     public async createChat(data) {
-        console.log('ChatsListController: createChats:');
         try {
             store.set('createChatsReq', { isLoading: true, errorMessage: '' });
 

@@ -144,7 +144,6 @@ export class Block<T extends object = {}> {
     }
 
     public compile(pugPrecompile: any, props?: Record<string, unknown>) {
-        console.log('Block: compile: props:', props);
         const propsAndChildren = { ...props };
 
         Object.entries(this.children).forEach(([key, child]) => {
@@ -169,7 +168,6 @@ export class Block<T extends object = {}> {
     }
 
     public setProps(nextProps: Partial<T>) {
-        console.log('Block: setProps:', nextProps);
         if (!nextProps) {
             return;
         }

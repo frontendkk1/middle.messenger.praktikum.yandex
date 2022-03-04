@@ -13,7 +13,6 @@ export class UserController {
     }
 
     public async getUser() {
-        console.log('UserController: getUser:');
         try {
             const userResponse = await loginApi.user();
 

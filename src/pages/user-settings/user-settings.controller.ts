@@ -67,7 +67,6 @@ export class UserSettingsController {
 
             this.router.go(PagesPath.USER);
         } catch (e) {
-            console.log(e);
             store.set('profileReq', {
                 isLoading: false,
                 errorMessage: e.message,

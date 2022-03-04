@@ -68,7 +68,6 @@ export class Router {
     }
 
     _onRoute(pathname) {
-        console.log('Router: _onRoute:', pathname);
         let route = this.getRoute(pathname);
         if (!route) {
             route = this.getRoute('*');
@@ -83,7 +82,6 @@ export class Router {
     }
 
     go(pathname, state = {}) {
-        console.log('Router: go:', pathname);
         this.history.pushState(state, '', pathname);
         this._onRoute(pathname);
     }

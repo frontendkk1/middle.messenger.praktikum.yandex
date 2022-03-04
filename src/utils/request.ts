@@ -82,7 +82,6 @@ export class HTTPTransport {
         timeout = 5000
     ): Promise<XMLHttpRequest> => {
         const { headers = {}, method, data } = options;
-        console.log('HTTPTransport: request:', options);
 
         return new Promise((resolve, reject) => {
             if (!method) {

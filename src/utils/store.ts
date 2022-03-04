@@ -13,12 +13,10 @@ class Store extends EventBus {
     private state: Indexed = {};
 
     public getState() {
-        console.log('Store: getState:', this.state);
         return this.state;
     }
 
     public set(path: string, value: unknown) {
-        console.log('Store: set:', { path, value });
         set(this.state, path, value);
 
         this.emit(StoreEvents.Updated);

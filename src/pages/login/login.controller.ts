@@ -19,7 +19,6 @@ export class LoginController {
     }
 
     public async login(data: LoginFormModel) {
-        console.log('LoginController: data:', data);
         try {
             const validateLogin = validate(ValidationNames.LOGIN, data.login);
             const validatePassword = validate(
