@@ -54,12 +54,7 @@ export class UserApi extends BaseAPI {
             .put('/profile', {
                 data: user,
             })
-            .then(
-                (req): IProfileResponse => ({
-                    status: req.status,
-                    response: req.response,
-                })
-            );
+            .then((res) => res);
     }
 
     public avatar(avatar) {
@@ -68,12 +63,7 @@ export class UserApi extends BaseAPI {
                 data: avatar,
                 headers: { 'content-type': undefined },
             })
-            .then(
-                (req): ISearchResponse => ({
-                    status: req.status,
-                    response: req.response,
-                })
-            );
+            .then((res) => res);
     }
 
     public search(data: ISearchRequest) {
@@ -81,12 +71,7 @@ export class UserApi extends BaseAPI {
             .post('/search', {
                 data,
             })
-            .then(
-                (req): ISearchResponse => ({
-                    status: req.status,
-                    response: req.response,
-                })
-            );
+            .then((res) => res);
     }
 
     public password(data: IPasswordRequest) {
@@ -94,11 +79,6 @@ export class UserApi extends BaseAPI {
             .put('/password', {
                 data,
             })
-            .then(
-                (req): IPasswordResponse => ({
-                    status: req.status,
-                    response: req.response,
-                })
-            );
+            .then((res) => res);
     }
 }

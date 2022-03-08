@@ -16,7 +16,7 @@ export class ChatUsersApi extends BaseAPI {
             .put<IChatUsersRequest, IChatUsersResponse>('', {
                 data,
             })
-            .then((req) => ({ status: req.status, response: req.response }));
+            .then((res) => res);
     }
 
     public deleteUsers(data: IChatUsersRequest) {
@@ -24,6 +24,6 @@ export class ChatUsersApi extends BaseAPI {
             .delete<IChatUsersRequest, IChatUsersResponse>('', {
                 data,
             })
-            .then((req) => ({ status: req.status, response: req.response }));
+            .then((res) => res);
     }
 }

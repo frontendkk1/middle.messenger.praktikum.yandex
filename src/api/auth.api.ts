@@ -40,7 +40,7 @@ export class AuthApi extends BaseAPI {
             .post<LoginRequest, LoginResponse>('/signin', {
                 data: JSON.stringify(user),
             })
-            .then((req) => ({ status: req.status, response: req.response }));
+            .then((res) => res);
     }
 
     public signup(user: ISignupRequest) {
@@ -48,20 +48,16 @@ export class AuthApi extends BaseAPI {
             .post<ISignupRequest, ISignupResponse>('/signup', {
                 data: JSON.stringify(user),
             })
-            .then((req) => ({ status: req.status, response: req.response }));
+            .then((res) => res);
     }
 
     public user() {
         return authAPIInstance
             .get<UserRequest, UserResponse>('/user')
-            .then((req) => {
-                return { status: req.status, response: req.response };
-            });
+            .then((res) => res);
     }
 
     public logout() {
-        return authAPIInstance.post('/logout').then((req) => {
-            return { status: req.status, response: req.response };
-        });
+        return authAPIInstance.post('/logout').then((res) => res);
     }
 }

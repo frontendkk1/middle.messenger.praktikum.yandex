@@ -49,7 +49,7 @@ export class ChatsApi extends BaseAPI {
             .get<IGetChatsRequest, IGetChatsResponse[]>('', {
                 data,
             })
-            .then((req) => ({ status: req.status, response: req.response }));
+            .then((res) => res);
     }
 
     public createChat(data: ICreateChatsRequest) {
@@ -57,7 +57,7 @@ export class ChatsApi extends BaseAPI {
             .post<ICreateChatsRequest, string | IBadRequest>('', {
                 data,
             })
-            .then((req) => ({ status: req.status, response: req.response }));
+            .then((res) => res);
     }
 
     public deleteChat(data: IDeleteChatsRequest) {
@@ -65,24 +65,18 @@ export class ChatsApi extends BaseAPI {
             .delete<IDeleteChatsRequest, IDeleteChatsResponse>('', {
                 data,
             })
-            .then((req) => ({ status: req.status, response: req.response }));
+            .then((res) => res);
     }
 
     public getChatCommon(data: { id: number }) {
-        return chatsAPIInstance
-            .get(`/${data.id}/common`)
-            .then((req) => ({ status: req.status, response: req.response }));
+        return chatsAPIInstance.get(`/${data.id}/common`).then((res) => res);
     }
 
     public getChatUsers(data: { id: number }) {
-        return chatsAPIInstance
-            .get(`/${data.id}/users`)
-            .then((req) => ({ status: req.status, response: req.response }));
+        return chatsAPIInstance.get(`/${data.id}/users`).then((res) => res);
     }
 
     public getToken(data: { id: number }) {
-        return chatsAPIInstance
-            .post(`/token/${data.id}`)
-            .then((req) => ({ status: req.status, response: req.response }));
+        return chatsAPIInstance.post(`/token/${data.id}`).then((res) => res);
     }
 }
