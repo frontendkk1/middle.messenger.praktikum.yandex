@@ -34,7 +34,7 @@ export class HTTPTransport {
 
     public get = (
         url: string,
-        options: TOptionsWithoutMethod
+        options: TOptionsWithoutMethod = {}
     ): Promise<XMLHttpRequest> => {
         return this.request(
             url,
@@ -45,7 +45,7 @@ export class HTTPTransport {
 
     public put = (
         url: string,
-        options: TOptionsWithoutMethod
+        options: TOptionsWithoutMethod = {}
     ): Promise<XMLHttpRequest> => {
         return this.request(
             url,
@@ -56,7 +56,7 @@ export class HTTPTransport {
 
     public post = (
         url: string,
-        options: TOptionsWithoutMethod
+        options: TOptionsWithoutMethod = {}
     ): Promise<XMLHttpRequest> => {
         return this.request(
             url,
@@ -67,7 +67,7 @@ export class HTTPTransport {
 
     public delete = (
         url: string,
-        options: TOptionsWithoutMethod
+        options: TOptionsWithoutMethod = {}
     ): Promise<XMLHttpRequest> => {
         return this.request(
             url,
@@ -81,7 +81,11 @@ export class HTTPTransport {
         options: IOptions = { method: MethodTypes.GET },
         timeout = 5000
     ): Promise<XMLHttpRequest> => {
-        const { headers = {}, method, data } = options;
+        const {
+            headers = { 'content-type': 'application/json' },
+            method,
+            data,
+        } = options;
 
         return new Promise((resolve, reject) => {
             if (!method) {
@@ -92,6 +96,10 @@ export class HTTPTransport {
             const xhr = new XMLHttpRequest();
             const isGet = method === MethodTypes.GET;
             const fullUrl = `${this.host}${url}`;
+            const curData =
+                data && headers['content-type'] === 'application/json'
+                    ? JSON.stringify(data)
+                    : data;
 
             xhr.open(
                 method,
@@ -116,10 +124,10 @@ export class HTTPTransport {
             xhr.timeout = timeout;
             xhr.ontimeout = reject;
 
-            if (isGet || !data) {
+            if (isGet || !curData) {
                 xhr.send();
             } else {
-                xhr.send(data);
+                xhr.send(curData);
             }
         });
     };

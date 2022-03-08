@@ -48,7 +48,6 @@ export class ChatsApi extends BaseAPI {
         return chatsAPIInstance
             .get<IGetChatsRequest, IGetChatsResponse[]>('', {
                 data,
-                headers: { 'content-type': 'application/json' },
             })
             .then((req) => ({ status: req.status, response: req.response }));
     }
@@ -57,7 +56,6 @@ export class ChatsApi extends BaseAPI {
         return chatsAPIInstance
             .post<ICreateChatsRequest, string | IBadRequest>('', {
                 data,
-                headers: { 'content-type': 'application/json' },
             })
             .then((req) => ({ status: req.status, response: req.response }));
     }
@@ -66,32 +64,25 @@ export class ChatsApi extends BaseAPI {
         return chatsAPIInstance
             .delete<IDeleteChatsRequest, IDeleteChatsResponse>('', {
                 data,
-                headers: { 'content-type': 'application/json' },
             })
             .then((req) => ({ status: req.status, response: req.response }));
     }
 
     public getChatCommon(data: { id: number }) {
         return chatsAPIInstance
-            .get(`/${data.id}/common`, {
-                headers: { 'content-type': 'application/json' },
-            })
+            .get(`/${data.id}/common`)
             .then((req) => ({ status: req.status, response: req.response }));
     }
 
     public getChatUsers(data: { id: number }) {
         return chatsAPIInstance
-            .get(`/${data.id}/users`, {
-                headers: { 'content-type': 'application/json' },
-            })
+            .get(`/${data.id}/users`)
             .then((req) => ({ status: req.status, response: req.response }));
     }
 
     public getToken(data: { id: number }) {
         return chatsAPIInstance
-            .post(`/token/${data.id}`, {
-                headers: { 'content-type': 'application/json' },
-            })
+            .post(`/token/${data.id}`)
             .then((req) => ({ status: req.status, response: req.response }));
     }
 }

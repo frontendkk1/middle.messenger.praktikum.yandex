@@ -15,7 +15,6 @@ export class ChatUsersApi extends BaseAPI {
         return chatUsersAPIInstance
             .put<IChatUsersRequest, IChatUsersResponse>('', {
                 data,
-                headers: { 'content-type': 'application/json' },
             })
             .then((req) => ({ status: req.status, response: req.response }));
     }
@@ -24,7 +23,6 @@ export class ChatUsersApi extends BaseAPI {
         return chatUsersAPIInstance
             .delete<IChatUsersRequest, IChatUsersResponse>('', {
                 data,
-                headers: { 'content-type': 'application/json' },
             })
             .then((req) => ({ status: req.status, response: req.response }));
     }

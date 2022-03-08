@@ -53,7 +53,6 @@ export class UserApi extends BaseAPI {
         return userAPIInstance
             .put('/profile', {
                 data: user,
-                headers: { 'content-type': 'application/json' },
             })
             .then(
                 (req): IProfileResponse => ({
@@ -64,6 +63,7 @@ export class UserApi extends BaseAPI {
     }
 
     public avatar(avatar) {
+        debugger;
         return userAPIInstance
             .put('/profile/avatar', {
                 data: avatar,
@@ -80,7 +80,6 @@ export class UserApi extends BaseAPI {
         return userAPIInstance
             .post('/search', {
                 data,
-                headers: { 'content-type': 'application/json' },
             })
             .then(
                 (req): ISearchResponse => ({
@@ -94,7 +93,6 @@ export class UserApi extends BaseAPI {
         return userAPIInstance
             .put('/password', {
                 data,
-                headers: { 'content-type': 'application/json' },
             })
             .then(
                 (req): IPasswordResponse => ({
