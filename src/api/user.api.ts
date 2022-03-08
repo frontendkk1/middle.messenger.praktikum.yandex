@@ -63,10 +63,10 @@ export class UserApi extends BaseAPI {
     }
 
     public avatar(avatar) {
-        debugger;
         return userAPIInstance
             .put('/profile/avatar', {
                 data: avatar,
+                headers: { 'content-type': undefined },
             })
             .then(
                 (req): ISearchResponse => ({
