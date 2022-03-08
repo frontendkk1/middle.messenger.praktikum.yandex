@@ -13,7 +13,8 @@
                         p.chat-item-info__message
                             if item.isMe
                                 span.chat-item-info__message_me Вы:
-                            != item.last_message.content
+                            if item.last_message
+                                != item.last_message.content
                     .chat-item-data.chat-item__data
                         p.chat-item-data__time= item.time
                         if item.count
