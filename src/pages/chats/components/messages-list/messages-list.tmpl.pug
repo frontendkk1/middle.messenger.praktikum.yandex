@@ -12,3 +12,10 @@
                         p.message__time= message.time
                     .message__content
                         != message.content
+
+    if !messages.length
+        .messages-list__item
+            .message.message_date
+                .message__content-wrapper
+                    .message__content
+                        | Нет сообщений

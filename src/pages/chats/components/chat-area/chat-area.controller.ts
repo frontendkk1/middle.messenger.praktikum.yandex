@@ -7,59 +7,71 @@ const chatsApi = new ChatsApi();
 const chatUsersApi = new ChatUsersApi();
 
 export class ChatAreaController {
-    socket;
-
-    public async initChat({ chatId }) {
+    public async initChat() {
         try {
-            const state = store.getState();
-            if (!chatId || !state?.user || !state.chatsToken[chatId]?.token) {
-                return;
-            }
+            const { chatId, user, chatsToken, chatsSocket } = store.getState();
 
-            this.socket = new WebSocket(
-                `${API_WS_HOST}/chats/${state.user.id}/${chatId}/${state.chatsToken[chatId].token}`
+            if (!chatId) throw new Error('Неизвестный чат');
+            if (!user.id) throw new Error('Пользователь не найден');
+            if (!chatsToken[chatId].token) throw new Error('Необходим токен чата');
+            if (chatsSocket && Object.prototype.hasOwnProperty.call(chatsSocket, chatId)) return;
+
+            const socket = new WebSocket(
+                `${API_WS_HOST}/chats/${user.id}/${chatId}/${chatsToken[chatId].token}`
             );
 
-            this.socket.addEventListener('open', () => {
-                this.socket.send(
+            socket.addEventListener('open', () => {
+                socket.send(
                     JSON.stringify({
-                        content: '10',
+                        content: '0',
                         type: 'get old',
                     })
                 );
             });
 
-            this.socket.addEventListener('message', (event) => {
+            socket.addEventListener('message', (event) => {
                 const messages = JSON.parse(event.data);
 
                 store.set(
-                    'messages',
+                    `chatsMessages.${chatId}`,
                     Array.isArray(messages)
                         ? messages
-                        : [messages].concat(store.getState().messages)
+                        : [messages].concat(store.getState().chatsMessages[chatId])
                 );
             });
 
-            this.socket.addEventListener('error', (event) => {});
-        } catch (e) {}
+            socket.addEventListener('error', (event) => { throw new Error(event.message)});
+
+            setInterval(() => { socket.send(JSON.stringify({ type: 'ping' })) }, 20000);
+
+            store.set(`chatsSocket.${chatId}`, socket);
+        } catch (e) {  console.log(e); }
     }
 
-    public sendMessage({ message }) {
-        this.socket.send(
-            JSON.stringify({
-                content: message,
-                type: 'message',
-            })
-        );
-    }
-
-    public async getToken({ chatId }) {
+    public sendMessage({ chatId, message }) {
         try {
-            if (!chatId) throw new Error('');
+            if (!chatId) throw new Error('Неизвестный чат');
 
             const state = store.getState();
 
-            if (state?.chatsToken && state.chatsToken[chatId]?.token) {
+            if (!state.chatsSocket[chatId]) throw new Error('Неизвестный чат');
+
+            state.chatsSocket[chatId].send(
+                JSON.stringify({
+                    content: message,
+                    type: 'message',
+                })
+            );
+        } catch (e) {  console.log(e); }
+    }
+
+    public async getToken() {
+        try {
+            const { chatId, chatsToken } = store.getState();
+
+            if (!chatId) throw new Error('Неизвестный чат');
+
+            if (chatsToken && chatsToken[chatId]?.token) {
                 return;
             }
 

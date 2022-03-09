@@ -14,7 +14,6 @@ const withChats = connect((state) => ({ chats: state.chats }));
 
 export class ChatsList extends Block {
     router;
-
     chatsController;
 
     constructor() {
