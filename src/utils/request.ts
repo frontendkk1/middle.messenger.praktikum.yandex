@@ -5,14 +5,18 @@ export enum MethodTypes {
     DELETE = 'DELETE',
 }
 
-interface IOptions {
+interface IOptions<TData> {
     headers?: Record<string, string>;
     method: MethodTypes;
-    data?: Document | XMLHttpRequestBodyInit;
+    data?: TData | Document | XMLHttpRequestBodyInit;
     timeout?: number;
 }
 
-type TOptionsWithoutMethod = Omit<IOptions, 'method'>;
+type TOptionsWithoutMethod<TData> = Omit<IOptions<TData>, 'method'>;
+
+type TXMLHttpResponse<TRes> = XMLHttpRequest & {
+    response: TRes;
+};
 
 function queryStringify(queryObj: Record<string, unknown>) {
     const keys = Object.keys(queryObj);
@@ -32,10 +36,10 @@ export class HTTPTransport {
         this.host = host;
     }
 
-    public get = (
+    public get = <TReq, TRes>(
         url: string,
-        options: TOptionsWithoutMethod = {}
-    ): Promise<XMLHttpRequest> => {
+        options: TOptionsWithoutMethod<TReq> = {}
+    ): Promise<TXMLHttpResponse<TRes>> => {
         return this.request(
             url,
             { ...options, method: MethodTypes.GET },
@@ -43,10 +47,10 @@ export class HTTPTransport {
         );
     };
 
-    public put = (
+    public put = <TReq, TRes>(
         url: string,
-        options: TOptionsWithoutMethod = {}
-    ): Promise<XMLHttpRequest> => {
+        options: TOptionsWithoutMethod<TReq> = {}
+    ): Promise<TXMLHttpResponse<TRes>> => {
         return this.request(
             url,
             { ...options, method: MethodTypes.PUT },
@@ -54,10 +58,10 @@ export class HTTPTransport {
         );
     };
 
-    public post = (
+    public post = <TReq, TRes>(
         url: string,
-        options: TOptionsWithoutMethod = {}
-    ): Promise<XMLHttpRequest> => {
+        options: TOptionsWithoutMethod<TReq> = {}
+    ): Promise<TXMLHttpResponse<TRes>> => {
         return this.request(
             url,
             { ...options, method: MethodTypes.POST },
@@ -65,10 +69,10 @@ export class HTTPTransport {
         );
     };
 
-    public delete = (
+    public delete = <TReq, TRes>(
         url: string,
-        options: TOptionsWithoutMethod = {}
-    ): Promise<XMLHttpRequest> => {
+        options: TOptionsWithoutMethod<TReq> = {}
+    ): Promise<TXMLHttpResponse<TRes>> => {
         return this.request(
             url,
             { ...options, method: MethodTypes.DELETE },
@@ -76,11 +80,11 @@ export class HTTPTransport {
         );
     };
 
-    request = (
+    request = <TReq, TRes>(
         url: string,
-        options: IOptions = { method: MethodTypes.GET },
+        options: IOptions<TReq> = { method: MethodTypes.GET },
         timeout = 5000
-    ): Promise<XMLHttpRequest> => {
+    ): Promise<TXMLHttpResponse<TRes>> => {
         const {
             headers = { 'content-type': 'application/json' },
             method,

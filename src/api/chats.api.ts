@@ -1,7 +1,7 @@
 import { BaseAPI } from '~src/utils/base-api';
 import { HTTPTransport as HTTP } from '~src/utils/request';
 import { API_HOST } from '~src/utils/constants';
-import { IBadRequest } from './types';
+import type { IBadRequest } from './models';
 
 const chatsAPIInstance = new HTTP(`${API_HOST}/chats`);
 

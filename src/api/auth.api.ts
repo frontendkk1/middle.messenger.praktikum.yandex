@@ -1,6 +1,7 @@
 import { BaseAPI } from '~src/utils/base-api';
 import { HTTPTransport as HTTP } from '~src/utils/request';
 import { API_HOST } from '~src/utils/constants';
+import type { IBadRequest } from './models';
 
 const authAPIInstance = new HTTP(`${API_HOST}/auth`);
 
@@ -9,20 +10,20 @@ interface LoginRequest {
     password: string;
 }
 
-interface LoginResponse {}
+type TLoginResponse = string | IBadRequest;
 
-interface UserRequest {}
-
-interface UserResponse {
-    id: number;
-    first_name: string;
-    second_name: string;
-    display_name: string;
-    login: string;
-    email: string;
-    phone: string;
-    avatar: string;
-}
+type TUserResponse =
+    | {
+          id: number;
+          first_name: string;
+          second_name: string;
+          display_name: string;
+          login: string;
+          email: string;
+          phone: string;
+          avatar: string;
+      }
+    | IBadRequest;
 
 interface ISignupRequest {
     first_name: string;
@@ -32,12 +33,12 @@ interface ISignupRequest {
     phone: string;
     password: string;
 }
-interface ISignupResponse {}
+type TSignupResponse = { id: number } | IBadRequest;
 
 export class AuthApi extends BaseAPI {
     public signin(data: LoginRequest) {
         return authAPIInstance
-            .post<LoginRequest, LoginResponse>('/signin', {
+            .post<LoginRequest, TLoginResponse>('/signin', {
                 data,
             })
             .then((res) => res);
@@ -45,7 +46,7 @@ export class AuthApi extends BaseAPI {
 
     public signup(data: ISignupRequest) {
         return authAPIInstance
-            .post<ISignupRequest, ISignupResponse>('/signup', {
+            .post<ISignupRequest, TSignupResponse>('/signup', {
                 data,
             })
             .then((res) => res);
@@ -53,11 +54,11 @@ export class AuthApi extends BaseAPI {
 
     public user() {
         return authAPIInstance
-            .get<UserRequest, UserResponse>('/user')
+            .get<{}, TUserResponse>('/user')
             .then((res) => res);
     }
 
     public logout() {
-        return authAPIInstance.post('/logout').then((res) => res);
+        return authAPIInstance.post<{}, string>('/logout').then((res) => res);
     }
 }
