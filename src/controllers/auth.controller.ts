@@ -1,5 +1,4 @@
 import { Router } from '~src/utils/router';
-import { PagesPath } from '~src/utils/constants';
 import store from '~src/utils/store';
 import { AuthApi } from '~src/api/auth.api';
 
