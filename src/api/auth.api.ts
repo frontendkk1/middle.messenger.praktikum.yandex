@@ -38,7 +38,7 @@ export class AuthApi extends BaseAPI {
     public signin(data: LoginRequest) {
         return authAPIInstance
             .post<LoginRequest, LoginResponse>('/signin', {
-                data
+                data,
             })
             .then((res) => res);
     }
@@ -46,7 +46,7 @@ export class AuthApi extends BaseAPI {
     public signup(data: ISignupRequest) {
         return authAPIInstance
             .post<ISignupRequest, ISignupResponse>('/signup', {
-                data
+                data,
             })
             .then((res) => res);
     }
