@@ -21,7 +21,7 @@
   font-weight: 500;
   font-size: 9px;
   line-height: 9px;
-  color: #999999;
+  color: var(--text-color-02);
   text-align: right;
 }
 .message {
@@ -37,17 +37,17 @@
   font-weight: 500;
   font-size: 12px;
   line-height: 12px;
-  color: #999999;
+  color: var(--text-color-02);
 }
 .message.message_text .message__content {
   padding: 11px;
-  background-color: #F8F8F8;
+  background-color: var(--nav-background-color);
   font-family: Inter;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 15px;
-  color: #1E1E1E;
+  color: var(--text-color-01);
   border-radius: 12px;
 
   p {
@@ -55,7 +55,7 @@
   }
 }
 .message.message_img .message__content {
-  border: 1px solid #EAEAEA;
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   overflow: hidden;
 }
@@ -69,8 +69,8 @@
   font-weight: 500;
   font-size: 12px;
   line-height: 15px;
-  color: #1E1E1E;
-  background-color: #E4EDFD;
+  color: var(--text-color-01);
+  background-color: var(--background-color);
   border-radius: 12px;
   padding-right: 50px;
 }
