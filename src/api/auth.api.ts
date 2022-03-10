@@ -35,18 +35,18 @@ interface ISignupRequest {
 interface ISignupResponse {}
 
 export class AuthApi extends BaseAPI {
-    public signin(user: LoginRequest) {
+    public signin(data: LoginRequest) {
         return authAPIInstance
             .post<LoginRequest, LoginResponse>('/signin', {
-                data: JSON.stringify(user),
+                data
             })
             .then((res) => res);
     }
 
-    public signup(user: ISignupRequest) {
+    public signup(data: ISignupRequest) {
         return authAPIInstance
             .post<ISignupRequest, ISignupResponse>('/signup', {
-                data: JSON.stringify(user),
+                data
             })
             .then((res) => res);
     }
