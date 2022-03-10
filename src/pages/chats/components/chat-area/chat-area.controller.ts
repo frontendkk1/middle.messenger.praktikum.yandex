@@ -32,6 +32,8 @@ export class ChatAreaController {
             socket.addEventListener('message', (event) => {
                 const messages = JSON.parse(event.data);
 
+                if (messages.type === 'pong' || messages.type === 'user connected') return;
+
                 store.set(
                     `chatsMessages.${chatId}`,
                     Array.isArray(messages)
