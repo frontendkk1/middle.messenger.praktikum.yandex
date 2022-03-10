@@ -199,7 +199,7 @@ export class Block<T extends object = {}> {
         }
     }
 
-    public abstract render(): DocumentFragment;
+    public render(): DocumentFragment;
 
     private _makeProxyObj<S extends object>(props: S) {
         const proxyProps = new Proxy<S>(props, {
