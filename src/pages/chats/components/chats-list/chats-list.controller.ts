@@ -1,6 +1,5 @@
 import store from '~src/utils/store';
 import { ChatsApi } from '~src/api/chats.api';
-import chats from '~src/pages/chats/chats';
 
 const chatsApi = new ChatsApi();
 

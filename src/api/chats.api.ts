@@ -42,6 +42,24 @@ interface IDeleteChatsResponse {
         avatar: string;
     };
 }
+interface IGetChatUsersRequest {
+    id: number;
+    offset?: number;
+    limit?: number;
+    name?: string;
+    email?: string;
+}
+interface IGetChatUsersResponse {
+    id: number;
+    first_name: string;
+    second_name: string;
+    display_name: string;
+    login: string;
+    email: string;
+    phone: string;
+    avatar: string;
+    role: string;
+}
 
 export class ChatsApi extends BaseAPI {
     public getChats(data?: IGetChatsRequest) {
@@ -69,14 +87,22 @@ export class ChatsApi extends BaseAPI {
     }
 
     public getChatCommon(data: { id: number }) {
-        return chatsAPIInstance.get(`/${data.id}/common`).then((res) => res);
+        return chatsAPIInstance
+            .get<{ id: number }, IGetChatsResponse>(`/${data.id}/common`)
+            .then((res) => res);
     }
 
-    public getChatUsers(data: { id: number }) {
-        return chatsAPIInstance.get(`/${data.id}/users`).then((res) => res);
+    public getChatUsers(data: IGetChatUsersRequest) {
+        return chatsAPIInstance
+            .get<IGetChatUsersRequest, IGetChatUsersResponse[]>(
+                `/${data.id}/users`
+            )
+            .then((res) => res);
     }
 
     public getToken(data: { id: number }) {
-        return chatsAPIInstance.post(`/token/${data.id}`).then((res) => res);
+        return chatsAPIInstance
+            .post<{ id: number }, { token: string }>(`/token/${data.id}`)
+            .then((res) => res);
     }
 }

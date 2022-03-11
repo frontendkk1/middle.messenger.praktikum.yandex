@@ -40,7 +40,7 @@ export class HTTPTransport {
         url: string,
         options: TOptionsWithoutMethod<TReq> = {}
     ): Promise<TXMLHttpResponse<TRes>> => {
-        return this.request(
+        return this.request<TReq, TRes>(
             url,
             { ...options, method: MethodTypes.GET },
             options?.timeout
@@ -51,7 +51,7 @@ export class HTTPTransport {
         url: string,
         options: TOptionsWithoutMethod<TReq> = {}
     ): Promise<TXMLHttpResponse<TRes>> => {
-        return this.request(
+        return this.request<TReq, TRes>(
             url,
             { ...options, method: MethodTypes.PUT },
             options?.timeout
@@ -62,7 +62,7 @@ export class HTTPTransport {
         url: string,
         options: TOptionsWithoutMethod<TReq> = {}
     ): Promise<TXMLHttpResponse<TRes>> => {
-        return this.request(
+        return this.request<TReq, TRes>(
             url,
             { ...options, method: MethodTypes.POST },
             options?.timeout
@@ -73,7 +73,7 @@ export class HTTPTransport {
         url: string,
         options: TOptionsWithoutMethod<TReq> = {}
     ): Promise<TXMLHttpResponse<TRes>> => {
-        return this.request(
+        return this.request<TReq, TRes>(
             url,
             { ...options, method: MethodTypes.DELETE },
             options?.timeout
