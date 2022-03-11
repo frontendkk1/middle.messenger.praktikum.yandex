@@ -9,6 +9,9 @@ form.form.login-form(action="/chats")
         if submitButton
             div.form__field
                 != submitButton
+                if signinReq
+                    p.input-field__message
+                        != signinReq.errorMessage
         if registrationButton
             div.form__field
                 != registrationButton

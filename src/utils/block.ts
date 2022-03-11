@@ -1,5 +1,4 @@
 import { v4 as makeUUID } from 'uuid';
-import * as pug from 'pug';
 import { EventBus } from './event-bus';
 
 export class Block<T extends object = {}> {
@@ -8,6 +7,7 @@ export class Block<T extends object = {}> {
         FLOW_CDM: 'flow:component-did-mount',
         FLOW_CDU: 'flow:component-did-update',
         FLOW_RENDER: 'flow:render',
+        FLOW_CWU: 'flow:component-will-unmount',
     };
 
     private _element: HTMLElement | null = null;
@@ -88,6 +88,10 @@ export class Block<T extends object = {}> {
         eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
         eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
         eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
+        eventBus.on(
+            Block.EVENTS.FLOW_CWU,
+            this._componentWillUnmount.bind(this)
+        );
     }
 
     private _componentDidMount() {
@@ -105,6 +109,21 @@ export class Block<T extends object = {}> {
         this._render();
     }
 
+    private _componentWillUnmount() {
+        this.componentWillUnmount();
+
+        Object.values(this.children).forEach((child) => {
+            child.dispatchComponentWillUnmount();
+        });
+    }
+
+    public componentWillUnmount() {}
+
+    public dispatchComponentWillUnmount() {
+        this.eventBus.emit(Block.EVENTS.FLOW_CWU);
+        this._unmount();
+    }
+
     private _componentDidUpdate(prevProps: T, newProps: T) {
         const response = this.componentDidUpdate(prevProps, newProps);
         if (response) {
@@ -112,7 +131,6 @@ export class Block<T extends object = {}> {
         }
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public componentDidUpdate(oldProps: T, newProps: T) {
         return true;
     }
@@ -134,12 +152,12 @@ export class Block<T extends object = {}> {
 
         const fragment = document.createElement('template');
 
-        console.log(propsAndChildren)
-
         fragment.innerHTML = pugPrecompile(propsAndChildren);
 
         Object.values(this.children).forEach((child) => {
-            const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
+            const stub = fragment.content.querySelector(
+                `[data-id="${child.id}"]`
+            );
             const childContent = child.getContent();
             if (childContent) {
                 stub?.replaceWith(childContent);
@@ -173,7 +191,15 @@ export class Block<T extends object = {}> {
         this._addEvents();
     }
 
-    public abstract render(): DocumentFragment;
+    private _unmount() {
+        this._removeEvents();
+
+        if (this._element) {
+            this._element.remove();
+        }
+    }
+
+    public render(): DocumentFragment;
 
     private _makeProxyObj<S extends object>(props: S) {
         const proxyProps = new Proxy<S>(props, {
@@ -182,7 +208,6 @@ export class Block<T extends object = {}> {
                     return true;
                 }
 
-                // eslint-disable-next-line no-param-reassign
                 target[prop as keyof S] = value;
                 this.eventBus.emit(Block.EVENTS.FLOW_CDU);
                 return true;
@@ -206,7 +231,10 @@ export class Block<T extends object = {}> {
 
     private _removeEvents() {
         Object.keys(this._events).forEach((eventName) => {
-            this._element?.removeEventListener(eventName, this._events[eventName]);
+            this._element?.removeEventListener(
+                eventName,
+                this._events[eventName]
+            );
         });
     }
 }

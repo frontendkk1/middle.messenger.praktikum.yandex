@@ -1,5 +1,6 @@
+if leftNavigationButton
+    != leftNavigationButton
 .profile
-    a(href="/chats").left-navigation-button
     div.main
         form.form(action="/chats")
             p.form__title Настройки пользователя
@@ -15,6 +16,9 @@
             if secondNameField
                 div.form__field
                     != secondNameField
+            if displayNameField
+                div.form__field
+                    != displayNameField
             if phoneField
                 div.form__field
                     != phoneField
@@ -24,6 +28,10 @@
             if submitButton
                 div.form__field
                     != submitButton
+
+                    if profileReq
+                        p.input-field__message
+                            != profileReq.errorMessage
             if loginButton
                 div.form__field
                     != loginButton

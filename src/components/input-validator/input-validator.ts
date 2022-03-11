@@ -1,11 +1,12 @@
-import { Block } from '../../utils/block';
-import { validate, VALIDATION_NAMES } from '../../utils/validator';
+import { Block } from '~src/utils/block';
+import { validate, ValidationNames } from '~src/utils/validator';
 import { Input, IInputProps } from '../input/input';
 import inputValidatorTemplate from './input-validator.tmpl.pug';
 
 interface IValidatedInputProps extends IInputProps {
     isValid: boolean;
-    validationName: VALIDATION_NAMES;
+    id?: string;
+    validationName?: ValidationNames;
     validationMessage?: string;
     withoutValidationMessage?: boolean;
 }
@@ -29,23 +30,33 @@ export default class ValidatedInput extends Block<IValidatedInputProps> {
     }
 
     protected getAttributes(): Record<string, string> {
-        return ({
+        return {
             class: 'input-field validated-input',
-        });
+        };
+    }
+
+    protected getEvents(): Record<string, (e: Event) => void> {
+        return this.props?.events || {};
     }
 
     public get value(): string {
         return this.children.loginField.value;
     }
 
+    public setValue(value: string) {
+        this.children.loginField.setValue(value);
+    }
+
     public validate(referenceValue?: string) {
         const { validationName, withoutValidationMessage } = this.props;
-        const {
-            isValid,
-            message,
-        } = validate(validationName, this.children.loginField.value, referenceValue);
+        const { isValid, message } = validate(
+            validationName,
+            this.children.loginField.value,
+            referenceValue
+        );
         this.setProps({
-            validationMessage: isValid || withoutValidationMessage ? '' : message,
+            validationMessage:
+                isValid || withoutValidationMessage ? '' : message,
         });
     }
 

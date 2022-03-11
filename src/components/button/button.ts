@@ -1,5 +1,6 @@
-import { Block } from '../../utils/block';
+import { Block } from '~src/utils/block';
 import submitButtonTemplate from './button.tmpl.pug';
+import './button.scss';
 
 interface ISubmitButtonProps {
     className?: string;
@@ -16,7 +17,7 @@ export class Button extends Block<ISubmitButtonProps> {
     protected getAttributes(): Record<string, string> {
         return {
             class: `button ${this.props.className || ''}`,
-            href: this.props.href || ''
+            href: this.props.href || '',
         };
     }
 

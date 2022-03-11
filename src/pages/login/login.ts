@@ -1,30 +1,44 @@
-import { Block } from '../../utils/block';
+import { Block } from '~src/utils/block';
+import { LoginController } from './login.controller';
+import { AuthController } from '~src/controllers/auth.controller';
 import '../index.scss';
 import './login.scss';
-import '../../components/form/form.scss';
-import '../../components/input/input.scss';
-import '../../components/input-validator/input-validator.scss';
-import '../../components/button/button.scss';
-import { Input } from '../../components/input/Input';
+import { Input } from '~src/components/input/Input';
 import loginTemplate from './login.tmpl.pug';
-import ValidatedInput from '../../components/input-validator/input-validator';
-import { Button } from '../../components/button/button';
-import { VALIDATION_NAMES } from '../../utils/validator';
+import ValidatedInput from '~src/components/input-validator/input-validator';
+import { Button } from '~src/components/button/button';
+import { ValidationNames } from '~src/utils/validator';
+import { Router } from '~src/utils/router';
+import { connect } from '~src/utils/connect';
+import { PagesPath } from '~src/utils/constants';
 
 interface ILoginProps {
     loginField: Input;
     passwordField: Input;
 }
 
+const withLoginApi = connect((state) => ({
+    user: { ...state.user },
+    signinReq: { ...state.signinReq },
+}));
+
 export class Login extends Block<ILoginProps> {
+    loginController;
+    authController;
+    router;
+
     constructor() {
         super('main');
+
+        this.authController = new AuthController();
+        this.loginController = new LoginController();
+        this.router = new Router('');
     }
 
     protected getChildren(): Record<string, Block> {
         const loginField = new ValidatedInput({
             isValid: false,
-            validationName: VALIDATION_NAMES.LOGIN,
+            validationName: ValidationNames.LOGIN,
             placeholder: 'Логин',
             name: 'login',
             type: 'text',
@@ -33,7 +47,7 @@ export class Login extends Block<ILoginProps> {
 
         const passwordField = new ValidatedInput({
             isValid: false,
-            validationName: VALIDATION_NAMES.PASSWORD,
+            validationName: ValidationNames.PASSWORD,
             placeholder: 'Пароль',
             name: 'password',
             type: 'password',
@@ -49,8 +63,7 @@ export class Login extends Block<ILoginProps> {
                     loginField.validate();
                     passwordField.validate();
 
-                    // eslint-disable-next-line no-console
-                    console.log('LOGIN_FORM DATA', {
+                    this.loginController.login({
                         login: loginField.value,
                         password: passwordField.value,
                     });
@@ -62,6 +75,13 @@ export class Login extends Block<ILoginProps> {
             text: 'Зарегистрироваться',
             className: 'white',
             href: '/registration',
+            events: {
+                click: (event) => {
+                    event.preventDefault();
+
+                    this.router.go(PagesPath.REGISTRATION);
+                },
+            },
         });
 
         return {
@@ -78,7 +98,15 @@ export class Login extends Block<ILoginProps> {
         };
     }
 
+    public async componentDidMount() {
+        const isAuth = await this.authController.checkAuth();
+
+        if (isAuth) this.router.go(PagesPath.CHATS)
+    }
+
     public render(): DocumentFragment {
-        return this.compile(loginTemplate);
+        return this.compile(loginTemplate, this.props);
     }
 }
+
+export default withLoginApi(Login);

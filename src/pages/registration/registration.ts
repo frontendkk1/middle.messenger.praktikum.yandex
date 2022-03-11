@@ -1,30 +1,47 @@
-import { Block } from '../../utils/block';
+import { Block } from '~src/utils/block';
+import { connect } from '~src/utils/connect';
 import '../index.scss';
 import './registration.scss';
 import '../../components/form/form.scss';
 import '../../components/input/input.scss';
 import '../../components/input-validator/input-validator.scss';
 import '../../components/button/button.scss';
-import { Input } from '../../components/input/Input';
+import { Input } from '~src/components/input/Input';
 import registrationTemplate from './registration.tmpl.pug';
 import ValidatedInput from '../../components/input-validator/input-validator';
-import { Button } from '../../components/button/button';
-import { VALIDATION_NAMES } from '../../utils/validator';
+import { Button } from '~src/components/button/button';
+import { ValidationNames } from '~src/utils/validator';
+import { RegistrationController } from './registration.controller';
+import { PagesPath } from '~src/utils/constants';
+import { Router } from '~src/utils/router';
+import { AuthController } from '~src/controllers/auth.controller';
 
 interface ILoginProps {
     loginField: Input;
     passwordField: Input;
 }
 
+const withRegistrationApi = connect((state) => ({
+    signupReq: { ...state.signupReq },
+}));
+
 export class Registration extends Block<ILoginProps> {
+    registrationController;
+    authController;
+    router;
+
     constructor() {
         super('main');
+
+        this.registrationController = new RegistrationController();
+        this.authController = new AuthController();
+        this.router = new Router('');
     }
 
     protected getChildren(): Record<string, Block> {
         const emailField = new ValidatedInput({
             isValid: false,
-            validationName: VALIDATION_NAMES.EMAIL,
+            validationName: ValidationNames.EMAIL,
             placeholder: 'Почта',
             name: 'email',
             type: 'email',
@@ -33,17 +50,16 @@ export class Registration extends Block<ILoginProps> {
 
         const loginField = new ValidatedInput({
             isValid: false,
-            validationName: VALIDATION_NAMES.LOGIN,
+            validationName: ValidationNames.LOGIN,
             placeholder: 'Логин',
             name: 'login',
             type: 'text',
             classNames: 'input-field__input',
         });
 
-
         const firstNameField = new ValidatedInput({
             isValid: false,
-            validationName: VALIDATION_NAMES.NAME,
+            validationName: ValidationNames.NAME,
             placeholder: 'Имя',
             name: 'first_name',
             type: 'text',
@@ -52,7 +68,7 @@ export class Registration extends Block<ILoginProps> {
 
         const secondNameField = new ValidatedInput({
             isValid: false,
-            validationName: VALIDATION_NAMES.NAME,
+            validationName: ValidationNames.NAME,
             placeholder: 'Фамилия',
             name: 'second_name',
             type: 'text',
@@ -61,7 +77,7 @@ export class Registration extends Block<ILoginProps> {
 
         const phoneField = new ValidatedInput({
             isValid: false,
-            validationName: VALIDATION_NAMES.PHONE,
+            validationName: ValidationNames.PHONE,
             placeholder: 'Телефон',
             name: 'phone',
             type: 'tel',
@@ -70,7 +86,7 @@ export class Registration extends Block<ILoginProps> {
 
         const passwordField = new ValidatedInput({
             isValid: false,
-            validationName: VALIDATION_NAMES.PASSWORD,
+            validationName: ValidationNames.PASSWORD,
             placeholder: 'Пароль',
             name: 'password',
             type: 'password',
@@ -96,12 +112,11 @@ export class Registration extends Block<ILoginProps> {
                         child.validate();
                     });
 
-                    // eslint-disable-next-line no-console
-                    console.log('REGISTRATION_FORM DATA', {
+                    this.registrationController.signup({
                         email: emailField.value,
                         login: loginField.value,
-                        firstName: firstNameField.value,
-                        secondName: secondNameField.value,
+                        first_name: firstNameField.value,
+                        second_name: secondNameField.value,
                         phone: phoneField.value,
                         password: passwordField.value,
                     });
@@ -112,7 +127,13 @@ export class Registration extends Block<ILoginProps> {
         const loginButton = new Button({
             text: 'Войти',
             className: 'white',
-            href: '/login',
+            events: {
+                click: (event) => {
+                    event.preventDefault();
+
+                    this.router.go(PagesPath.LOGIN);
+                },
+            },
         });
 
         return {
@@ -133,7 +154,15 @@ export class Registration extends Block<ILoginProps> {
         };
     }
 
+    public async componentDidMount() {
+        const isAuth = await this.authController.checkAuth();
+
+        if (isAuth) this.router.go(PagesPath.CHATS)
+    }
+
     public render(): DocumentFragment {
-        return this.compile(registrationTemplate);
+        return this.compile(registrationTemplate, this.props);
     }
 }
+
+export default withRegistrationApi(Registration);
