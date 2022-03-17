@@ -5,16 +5,19 @@
     flex-direction: column;
     justify-content: space-between;
 }
+
 .chat-header {
     display: flex;
     justify-content: space-between;
     padding: 10px 0;
     border-bottom: 1px solid var(--border-color);
 }
+
 .chat-profile {
     display: flex;
     align-items: center;
 }
+
 .chat-profile__avatar {
     width: 47px;
     height: 47px;
@@ -22,16 +25,20 @@
     border-radius: 50%;
     margin-right: 10px;
 }
+
 .chat-profile__name {
     @include bold-text;
+
     font-size: 13px;
     line-height: 13px;
     color: var(--text-color-01);
 }
+
 .chat-menu {
     display: flex;
     align-items: center;
 }
+
 .chat-menu__hamburger {
     width: 24px;
     height: 24px;

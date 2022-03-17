@@ -23,11 +23,11 @@
 
 .user-profile__name {
     @include bold-text;
+
     margin-bottom: 60px;
     font-size: 16px;
     line-height: 16px;
     text-align: center;
-
     color: var(--text-color-01);
 }
 
@@ -42,16 +42,19 @@
     padding: 10px 0;
     border-bottom: 1px solid var(--border-color);
 }
+
 .user-profile__item:last-child {
     border-bottom: none;
 }
 
 p.user-profile__item {
     @include normal-text;
+
     font-size: 13px;
     line-height: 13px;
     color: var(--text-color-01);
 }
+
 .user-profile__item-value {
     color: var(--text-color-02);
 }

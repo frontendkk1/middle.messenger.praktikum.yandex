@@ -1,10 +1,22 @@
 {
-  "extends": "stylelint-config-standard",
-  "ignoreFiles": [
-    "dist/**/*"
-  ],
-  "rules": {
-    "string-quotes": "single",
-    "font-family-name-quotes": "always-unless-keyword"
-  }
+    "extends": "stylelint-config-standard",
+    "ignoreFiles": [
+        "dist/**/*"
+    ],
+    "plugins": [
+        "stylelint-order"
+    ],
+    "rules": {
+        "string-quotes": "single",
+        "font-family-name-quotes": "always-unless-keyword",
+        "indentation": 4,
+        "order/order": [
+            "custom-properties",
+            "declarations"
+        ],
+        "order/properties-order": [
+            "width",
+            "height"
+        ]
+    }
 }
