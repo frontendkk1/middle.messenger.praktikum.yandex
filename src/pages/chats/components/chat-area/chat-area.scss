@@ -1,3 +1,5 @@
+@import '../../../../styles/mixins';
+
 .chat-wrapper {
     display: flex;
     flex-direction: column;
@@ -21,9 +23,7 @@
     margin-right: 10px;
 }
 .chat-profile__name {
-    font-family: Inter;
-    font-style: normal;
-    font-weight: 600;
+    @include bold-text;
     font-size: 13px;
     line-height: 13px;
     color: var(--text-color-01);

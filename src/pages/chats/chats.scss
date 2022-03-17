@@ -1,3 +1,5 @@
+@import '../../styles/mixins';
+
 .chats-wrapper {
   display: flex;
   height: 100%;
@@ -8,13 +10,11 @@
   padding: 0 10px;
 }
 .profile-link {
+    @include normal-text;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   color: var(--text-color-02);
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 500;
   font-size: 12px;
   margin-top: 21px;
   margin-bottom: 23px;
@@ -27,15 +27,13 @@
   margin-bottom: 14px;
 }
 .chats-search__input {
+    @include normal-text;
   width: 100%;
   height: 32px;
   background-color: var(--neutral-background-color);
   border: none;
   border-radius: 5px;
   padding: 8px;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 500;
   font-size: 12px;
   line-height: 12px;
   color: var(--text-color-01);

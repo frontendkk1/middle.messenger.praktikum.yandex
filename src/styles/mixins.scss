@@ -1,0 +1,11 @@
+@mixin normal-text {
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 500;
+}
+
+@mixin bold-text {
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 600;
+}

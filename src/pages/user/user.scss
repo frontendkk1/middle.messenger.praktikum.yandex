@@ -1,3 +1,5 @@
+@import '../../styles/mixins';
+
 .main-user {
     display: flex;
     justify-content: flex-start;
@@ -20,10 +22,8 @@
 }
 
 .user-profile__name {
+    @include bold-text;
     margin-bottom: 60px;
-    font-family: Inter;
-    font-style: normal;
-    font-weight: 600;
     font-size: 16px;
     line-height: 16px;
     text-align: center;
@@ -47,9 +47,7 @@
 }
 
 p.user-profile__item {
-    font-family: Inter;
-    font-style: normal;
-    font-weight: 500;
+    @include normal-text;
     font-size: 13px;
     line-height: 13px;
     color: var(--text-color-01);
