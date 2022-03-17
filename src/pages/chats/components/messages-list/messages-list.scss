@@ -1,3 +1,5 @@
+@import '../../../../styles/mixins';
+
 .messages-list {
   height: 100%;
   display: flex;
@@ -13,12 +15,10 @@
   display: inline-block;
 }
 .message__time {
+    @include normal-text;
   position: absolute;
   right: 11px;
   bottom: 11px;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 500;
   font-size: 9px;
   line-height: 9px;
   color: var(--text-color-02);
@@ -31,20 +31,16 @@
   text-align: center;
 }
 .message.message_date .message__content {
+    @include normal-text;
   text-align: center;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 500;
   font-size: 12px;
   line-height: 12px;
   color: var(--text-color-02);
 }
 .message.message_text .message__content {
+    @include normal-text;
   padding: 11px;
   background-color: var(--nav-background-color);
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 500;
   font-size: 12px;
   line-height: 15px;
   color: var(--text-color-01);
@@ -63,10 +59,8 @@
   text-align: right;
 }
 .message.message_me .message__content {
+    @include normal-text;
   padding: 11px;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 500;
   font-size: 12px;
   line-height: 15px;
   color: var(--text-color-01);
