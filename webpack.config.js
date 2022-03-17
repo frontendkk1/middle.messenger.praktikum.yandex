@@ -2,7 +2,7 @@ const path = require('path');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const tsConfigPath = path.resolve(__dirname, 'tsconfig.json');
+const TS_CONFIG_PATH = path.resolve(__dirname, 'tsconfig.json');
 
 module.exports = {
     entry: './src/pages/index.ts',
@@ -12,7 +12,7 @@ module.exports = {
     },
     resolve: {
         extensions: ['.ts', '.js', '.json'],
-        plugins: [new TsconfigPathsPlugin({ configFile: tsConfigPath })],
+        plugins: [new TsconfigPathsPlugin({ configFile: TS_CONFIG_PATH })],
     },
     devServer: {
         static: {
@@ -30,7 +30,7 @@ module.exports = {
                     {
                         loader: 'ts-loader',
                         options: {
-                            configFile: tsConfigPath,
+                            configFile: TS_CONFIG_PATH,
                             transpileOnly: true,
                             onlyCompileBundledFiles: true, // https://github.com/TypeStrong/ts-loader#onlycompilebundledfiles
                         },
